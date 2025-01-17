@@ -7,19 +7,19 @@
     <div id="gpuMain" class="mainAreaHome">
       <div id="gpuMain1"></div>
       <div id="gpuMain2">
-        <a href="#">GPU</a>
+        <a href="#" class="linkMainArea">GPU</a>
       </div>
     </div>
     <div id="cpuMain" class="mainAreaHome">
       <div></div>
       <div>
-        <a href="#">CPU</a>
+        <a href="#" class="linkMainArea">CPU</a>
       </div>
     </div>
     <div id="ssdMain" class="mainAreaHome">
       <div></div>
       <div>
-        <a href="#">SSD</a>
+        <a href="#" class="linkMainArea">SSD</a>
       </div>
     </div>
   </div>
@@ -52,6 +52,10 @@ export default {
   margin-bottom: 20%;
   box-sizing: border-box;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   :first-child {
     width: 100%;
     height: 35%;
@@ -61,11 +65,15 @@ export default {
   }
 
   :nth-child(2) {
+    box-sizing: border-box;
+    padding-top: 215px;
     width: 100%;
     height: 65%;
     background-color: var(--primaryBackgroundColor1);
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   a {
@@ -83,6 +91,15 @@ export default {
     margin-left: auto;
     margin-right: auto;
   }
+
+  a:hover {
+    background-color: var(--greenHover) !important;
+    transition: background-color 0.3s;
+  }
+}
+
+.linkMainArea {
+    margin-top: 30px;
 }
 
 #gpuMain:hover, #cpuMain:hover, #ssdMain:hover {
