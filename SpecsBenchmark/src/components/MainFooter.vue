@@ -4,11 +4,11 @@
 
 <template>
   <footer>
-      <div id="footerLinks">
-        <a href="#" class="footerLink">Impressum</a>
-        <a href="#" class="footerLink">Kontakt</a>
-        <a href="#" class="footerLink">Über diese Seite</a>
-      </div>
+    <div id="footerLinks">
+      <a href="#" class="footerLink">Impressum</a>
+      <a href="#" class="footerLink">Kontakt</a>
+      <a href="#" class="footerLink">Über diese Seite</a>
+    </div>
     <!-- <img src="../assets/Bilder/LogoPage.webp" alt="PC Logo" id="pclogo"> -->
   </footer>
 </template>
@@ -16,9 +16,9 @@
 <style lang="scss">
 footer {
   width: 100%;
-  height: 127px;
+  height: 130px;
   background-color: var(--primaryColor1);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px var(--primaryGreen1);
 }
 
 #footerLinks {
@@ -54,6 +54,12 @@ footer {
 
   .footerLink {
     margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 430px) {
+  #footerLinks {
+    padding-top: 45px;
   }
 }
 </style>
