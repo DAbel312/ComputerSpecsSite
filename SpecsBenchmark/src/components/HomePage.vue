@@ -1,33 +1,41 @@
 <script setup>
-
+import CsButton from "./CsButton.vue";
+import router from "../router/index.js";
 </script>
 
 <template>
   <div id="mainArea">
     <div id="gpuMain" class="mainAreaHome">
-      <div id="gpuMain1"></div>
+      <div id="gpuMain1">
+        <img src="../assets/Bilder/LogoGrafic.webp" alt="GPU">
+      </div>
       <div id="gpuMain2">
         <span>blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla</span>
-        <a href="#" class="linkMainArea" >GPU</a>
+        <csButton @click="router.go(-1)" content="GPU" class="mainAreaButton"/>
       </div>
     </div>
     <div id="cpuMain" class="mainAreaHome">
-      <div id="cpuMain1"></div>
+      <div id="cpuMain1">
+        <img src="../assets/Bilder/LogoCPU.webp" alt="CPU">
+      </div>
       <div id="cpuMain2">
         <span>blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla</span>
-        <a href="#" class="linkMainArea">CPU</a>
+        <csButton @click="router.go(-1)" content="CPU" class="mainAreaButton"/>
       </div>
     </div>
     <div id="ssdMain" class="mainAreaHome">
-      <div id="ssdMain1"></div>
+      <div id="ssdMain1">
+        <img src="../assets/Bilder/LogoSSD.webp" alt="CPU">
+      </div>
       <div id="ssdMain2">
         <span>blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla</span>
-        <a href="#" class="linkMainArea">SSD</a>
+        <csButton @click="router.go(-1)" content="SSD" class="mainAreaButton"/>
       </div>
     </div>
   </div>
   <div id="newsArea">
     <h2 id="h2NewsArea">Neuigkeiten</h2>
+    <csButton @click="router.go(-1)" content="Mehr Neuigkeiten" width="200px" class="mainAreaButton" id="moreNewsButton"/>
   </div>
 </template>
 
@@ -38,23 +46,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-* {
-
-}
 
 #mainArea {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
-  background-color: var(--primaryBackgroundColor1);
 }
 
 .mainAreaHome {
   width: 350px;
   height: 470px;
   border-radius: 13px;
-  box-shadow: var(--primaryGreen1) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
   margin-top: 20%;
   margin-bottom: 20%;
   box-sizing: border-box;
@@ -62,6 +66,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: scale 0.3s ease-in-out;
 
 
   #gpuMain1, #cpuMain1, #ssdMain1 {
@@ -70,6 +75,13 @@ export default {
     background-color: black;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
+
+    img {
+      width: 100%;
+      height: 155%;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
   }
 
   #gpuMain2, #cpuMain2, #ssdMain2 {
@@ -83,26 +95,20 @@ export default {
     align-items: center;
   }
 
-  a {
-    color: var(--black);
+  .mainAreaButton {
     font-weight: bold;
     text-decoration-line: none;
-    background-color: var(--primaryGreen1);
     display: block;
     width: 60%;
     height: 40px;
-    border-radius: 7px;
     text-align: center;
     padding-top: 3%;
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 5%;
   }
 
-  a:hover {
-    background-color: var(--greenHover);
-    transition: background-color 0.3s;
-  }
 
   span {
     margin: 10px 10px 10px 10px;
@@ -115,7 +121,7 @@ export default {
 }
 
 .linkMainArea {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #gpuMain:hover, #cpuMain:hover, #ssdMain:hover {
@@ -123,9 +129,9 @@ export default {
   transition: scale 0.3s;
 }
 
-#newsArea{
+#newsArea {
   width: 100%;
-  height: 600px;
+  height: 900px;
   background-color: var(--primaryColor2);
   box-sizing: border-box;
 
@@ -135,6 +141,10 @@ export default {
     font-weight: bold;
     font-size: 3rem;
     padding-top: 20px;
+  }
+
+  #moreNewsButton {
+    margin: 750px 46% 0 46%;
   }
 }
 

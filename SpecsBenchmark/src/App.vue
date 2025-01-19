@@ -1,5 +1,4 @@
 <script setup>
-// import HelloWorld from './components/HelloWorld.vue'
 import HeaderComponent from './components/MainHeader.vue';
 import footerComponent from './components/MainFooter.vue';
 </script>
