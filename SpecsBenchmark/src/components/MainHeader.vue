@@ -1,5 +1,5 @@
 <script setup>
-
+import router from "../router/index.js";
 </script>
 
 <template>
@@ -14,7 +14,7 @@
           <li><a href="#">CPU</a></li>
           <li><a href="#">SSD</a></li>
           <li><a href="#">Kontakt</a></li>
-          <li><a href="#">Impressum</a></li>
+          <li><a href="/#/impressum">Impressum</a></li>
         </ul>
         <div id="burgerMenu">
           <label for="toggleNav">
@@ -34,7 +34,7 @@
         <li><a href="#">CPU</a></li>
         <li><a href="#">SSD</a></li>
         <li><a href="#">Kontakt</a></li>
-        <li><a href="#">Impressum</a></li>
+        <li><a href="/#/impressum">Impressum</a></li>
       </ul>
     </div>
   </header>
@@ -58,7 +58,7 @@ export default {
 
 #responsive-header {
   background: var(--primaryColor1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px var(--primaryGreen1);
 }
 
 #responsive-header nav {
