@@ -16,7 +16,7 @@
 <style lang="scss">
 footer {
   width: 100%;
-  height: 130px;
+  height: 170px;
   background-color: var(--primaryColor1);
   box-shadow: 0 0 10px var(--primaryGreen1);
 }

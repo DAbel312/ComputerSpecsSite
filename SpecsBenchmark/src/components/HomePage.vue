@@ -35,15 +35,7 @@ import router from "../router/index.js";
   </div>
   <div id="newsArea">
     <h2 id="h2NewsArea">Neuigkeiten</h2>
-    <csButton @click="openCreateNews" content="Neuen Eintrag erstellen" width="270px" class="mainAreaButton" id="createNewsButton"/>
     <csButton @click="" content="Mehr Neuigkeiten" width="200px" class="mainAreaButton" id="moreNewsButton"/>
-    <div class="formCreateNews" id="createNews" v-show="isCreateNewsVisible">
-      <form action="" id="createNewsForm">
-        <input type="text" placeholder="Überschrift">
-        <textarea name="" id="newsText"></textarea>
-        <csButton @click="openCreateNews" content="Veröffentlichen" width="200px" id="publishNewsButton"/>
-      </form>
-    </div>
   </div>
 </template>
 
@@ -56,14 +48,7 @@ export default {
     };
   },
   methods: {
-    openCreateNews() {
-      if (this.isCreateNewsVisible === false) {
-        this.isCreateNewsVisible = true;
-      } else {
-        this.isCreateNewsVisible = false;
-      }
-    },
-  },
+    }
 };
 </script>
 
@@ -151,43 +136,6 @@ export default {
   transition: scale 0.3s;
 }
 
-#createNews {
-  position: fixed;
-  z-index: 9;
-  width: 900px;
-  background-color: var(--primaryBackgroundColor1);
-  position: fixed;
-  justify-self: center;
-  bottom: 500px;
-  box-sizing: border-box;
-  border-radius: 5px;
-
-  textarea {
-    resize: vertical;
-    min-height: 300px;
-    width: 860px;
-    box-sizing: border-box;
-    margin: 2% 2% 2% 2%;
-    padding: 5px 5px 5px 5px;
-    outline: none;
-  }
-
-  input {
-    height: 50px;
-    width: 860px;
-    box-sizing: border-box;
-    margin: 2% 2% 2% 2%;
-    font-size: 1.5rem;
-    outline: none;
-  }
-
-  button {
-    margin-left: 40%;
-    margin-bottom: 2%;
-  }
-
-}
-
 #newsArea {
   display: grid;
   grid-template-columns: 1fr;
@@ -208,19 +156,12 @@ export default {
   }
 
   #moreNewsButton {
-    margin: 750px 46% 0 46%;
     grid-row: 3;
     grid-column: 1;
+    justify-self: center;
+    height: 40px;
   }
-
-  #createNewsButton {
-  grid-row: 1;
-  grid-column: 1;
-  margin-left: 70%;
-  margin-top: 1%;
 }
-}
-
 
 @media (max-width: 1430px) {
   #mainArea {
