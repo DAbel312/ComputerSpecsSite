@@ -47,11 +47,34 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('jwt');
-    if (to.meta.requiresAuth && !token) {
-        next('/admin_log_in');
+
+    if (to.meta.requiresAuth) {
+        if (!token || isTokenExpired(token)) {
+            localStorage.removeItem('jwt');
+            next('/admin_log_in');
+        } else {
+            next();
+        }
     } else {
         next();
     }
 });
+
+/**
+ * checks if token is expired
+ * @param token
+ * @returns {boolean}
+ */
+
+function isTokenExpired(token) {
+    if (!token) return true;
+
+    const payloadBase64 = token.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    const payload = JSON.parse(payloadJson);
+
+    const now = Math.floor(Date.now() / 1000);
+    return payload.exp < now;
+}
 
 export default router
