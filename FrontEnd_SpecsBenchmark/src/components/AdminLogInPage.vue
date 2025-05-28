@@ -1,13 +1,15 @@
 <script setup>
 
+import CsButton from "./CsButton.vue";
+import CsInput from "./CsInput.vue";
 </script>
 
 <template>
     <div id="adminLogInDiv">
       <h4>Administrator Log In</h4>
-      <input type="text" placeholder="Benutzername" id="userName" v-model="username">
-      <input type="password" placeholder="Passwort" id="password" v-model="password">
-      <input type="button" placeholder="Login" value="Login" id="loginButton" @click="login()">
+      <CsInput placeholder="Benutzername" id="userName" v-model="username" width="60%" type="text"></CsInput>
+      <CsInput placeholder="Password" type="password" id="password" v-model="password" width="60%"></CsInput>
+      <cs-button @click="login()" content="Login" id="loginButton" width="45%"></cs-button>
     </div>
 </template>
 
@@ -52,36 +54,36 @@ export default {
 <style scoped lang="scss">
 
   #adminLogInDiv {
-    height: 250px;
-    width: 30%;
-    border: solid var(--primaryColor1);
-    border-radius: 4px;
+    height: 330px;
+    width: 45%;
+    box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px;
     justify-self: center;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-columns: 1fr;
-    margin-top: 100px;
-    margin-bottom: 100px;
-
-    input {
-      width: 60%;
-      height: 40px;
-      justify-self: center;
-      margin-top: 10px;
-      outline: none;
-    }
+    margin-top: 220px;
+    margin-bottom: 220px;
+    background-color: var(--primaryBackgroundColor1);
+    border-radius: 12px;
 
     h4 {
       text-align: center;
-      margin-top: 10px;
+      margin-top: 25px;
     }
 
     #userName {
       margin-top: 20px;
+      justify-self: center;
     }
 
-    #loginButton:hover {
-      cursor: pointer;
+    #loginButton {
+      justify-self: center;
+      height: 40px;
+      margin-top: 10px;
+    }
+
+    #password {
+      justify-self: center;
     }
   }
 </style>
