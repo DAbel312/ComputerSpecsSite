@@ -10,6 +10,7 @@ import CsInput from "./CsInput.vue";
       <CsInput placeholder="Benutzername" id="userName" v-model="username" width="60%" type="text"></CsInput>
       <CsInput placeholder="Password" type="password" id="password" v-model="password" width="60%"></CsInput>
       <cs-button @click="login()" content="Login" id="loginButton" width="45%"></cs-button>
+      <p id="message">{{ message }}</p>
     </div>
 </template>
 
@@ -27,13 +28,14 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      message: ''
     };
   },
   methods: {
     async login() {
       try {
-        const response = await axios.post('http://localhost:5174/login', {
+        const response = await axios.post('http://localhost:5174/api/admin/login', {
           username: this.username,
           password: this.password
         });
@@ -42,7 +44,7 @@ export default {
 
         router.push("/admin");
       } catch (error) {
-        alert("Login fehlgeschlagen")
+        this.message = "Login fehlgeschlagen"
         console.error(error);
       }
     }
@@ -85,5 +87,11 @@ export default {
     #password {
       justify-self: center;
     }
+  }
+
+  #message {
+    text-align: center;
+    color: red;
+    margin-bottom: 10px;
   }
 </style>

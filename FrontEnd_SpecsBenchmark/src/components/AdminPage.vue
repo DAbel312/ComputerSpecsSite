@@ -7,13 +7,40 @@ import CsButton from "./CsButton.vue";
   <div id="mainDiv">
     <h3>Willkommen im Admin-Dashboard</h3>
     <h4>Neuen Artikel erstellen</h4>
-    <CsInput placeholder="Titel" width="40%" type="text" id="newsTitle"></CsInput>
-    <textarea placeholder="Text" id="newsTextarea"></textarea>
-    <CsButton content="Veröffentlichen" width="35%" id="newsPublish"></CsButton>
+    <CsInput placeholder="Titel" width="40%" type="text" id="newsTitle" v-model="title"></CsInput>
+    <textarea placeholder="Text" id="newsTextarea" v-model="content"></textarea>
+    <CsButton content="Veröffentlichen" width="35%" id="newsPublish" @click="createArticle()"></CsButton>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      title: "",
+      content: "",
+      author: ""
+    }
+  },
+  methods: {
+    async createArticle() {
+      const token = localStorage.getItem('jwt');
+      const payloadBase64 = token.split('.')[1];
+      const payloadJson = atob(payloadBase64);
+      const payload = JSON.parse(payloadJson);
+
+      const authorToken = payload.sub;
+
+      await axios.post('http://localhost:5174/api/article/create', {
+        title: this.title,
+        content: this.content,
+        author: authorToken
+      });
+    }
+  }
+}
 
 </script>
 
