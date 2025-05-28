@@ -7,9 +7,10 @@ import CsButton from "./CsButton.vue";
   <div id="mainDiv">
     <h3>Willkommen im Admin-Dashboard</h3>
     <h4>Neuen Artikel erstellen</h4>
-    <CsInput placeholder="Titel" width="40%" type="text" id="newsTitle" v-model="title"></CsInput>
+    <CsInput placeholder="Titel" width="40%" type="text" id="newsTitle" v-model="title" max-length="254"></CsInput>
     <textarea placeholder="Text" id="newsTextarea" v-model="content"></textarea>
     <CsButton content="Veröffentlichen" width="35%" id="newsPublish" @click="createArticle()"></CsButton>
+    <p id="status" :class="{ 'text-red': isError, 'text-green': !isError }">{{ status }}</p>
   </div>
 </template>
 
@@ -21,7 +22,9 @@ export default {
     return {
       title: "",
       content: "",
-      author: ""
+      author: "",
+      status: "",
+      isError: ""
     }
   },
   methods: {
@@ -32,12 +35,21 @@ export default {
       const payload = JSON.parse(payloadJson);
 
       const authorToken = payload.sub;
+      try {
+        await axios.post('http://localhost:5174/api/article/create', {
+          title: this.title,
+          content: this.content,
+          author: authorToken
+        });
 
-      await axios.post('http://localhost:5174/api/article/create', {
-        title: this.title,
-        content: this.content,
-        author: authorToken
-      });
+        this.isError = false;
+
+        this.status = "Artikel erfolgreich veröffentlicht."
+
+      } catch(error) {
+        this.isError = true;
+        this.status = "Veröffentlichung fehlgeschlagen. Bitte kontaktieren Sie einen Administrator."
+      }
     }
   }
 }
@@ -69,7 +81,7 @@ export default {
       transition: border-radius 0.3s ease;
       border: none;
       box-sizing: border-box;
-      padding: 2% 2% 2% 2%;
+      padding: 2% 1.5% 2% 1.5%;
     }
 
     #newsTextarea:focus-within {
@@ -80,6 +92,18 @@ export default {
     #newsPublish {
       margin-top: 15px;
     }
+  }
+
+  #status {
+    margin-top: 20px;
+  }
+
+  .text-green {
+    color: var(--primaryGreen1);
+  }
+
+  .text-red {
+    color: red;
   }
 
 </style>

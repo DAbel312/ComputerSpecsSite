@@ -1,15 +1,14 @@
 package de.computerspecs.backend.controller;
 
 import de.computerspecs.backend.dto.ArticleDTO;
+import de.computerspecs.backend.entity.Article;
 import de.computerspecs.backend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Controller for managing articles in the news area
@@ -34,5 +33,15 @@ public class ArticleController {
         Date date = new Date(nowMillis);
 
         return articleService.createArticle(articleDto.getTitle(), articleDto.getContent(), date, articleDto.getAuthor());
+    }
+
+    /**
+     * endpoint to get all articles from database
+     * @return
+     */
+
+    @GetMapping("/get")
+    public List<Article> getArticles() {
+        return articleService.getArticle();
     }
 }

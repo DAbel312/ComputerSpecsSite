@@ -1,6 +1,44 @@
 <script setup>
 import CsButton from "./CsButton.vue";
 import router from "../router/index.js";
+import {onMounted} from "vue";
+import axios from "axios";
+
+onMounted(() => {
+
+  const newsArea = document.getElementById('newsArea');
+  async function getArticles() {
+    const response = await axios.get('http://localhost:5174/api/article/get');
+
+    for (let i = 0; i < 2; i++) {
+      const newsDiv = document.createElement('div');
+      newsArea.appendChild(newsDiv);
+
+      const newsDivTitle = document.createElement('H3');
+      const newsDivContent = document.createElement('div');
+      const newsDivDate = document.createElement('p');
+      const newsDivAuthor = document.createElement('p');
+
+      newsDivTitle.textContent = response.data[i].title;
+      newsDivContent.textContent = response.data[i].content;
+      newsDivDate.textContent = ("Datum: " + response.data[i].date).slice(0, 17);
+      newsDivAuthor.textContent = "Autor: " + response.data[i].author;
+
+      newsDiv.appendChild(newsDivTitle);
+      newsDiv.appendChild(newsDivContent);
+      newsDiv.appendChild(newsDivDate);
+      newsDiv.appendChild(newsDivAuthor);
+
+      newsDiv.className = "newsDiv" + i;
+      newsDivTitle.className = "newsDivTitle";
+      newsDivContent.className = "newsDivContent";
+      newsDivDate.className = "newsDivDate"
+      newsDivAuthor.className = "newsDivAuthor";
+    }
+  }
+
+  getArticles();
+})
 </script>
 
 <template>
@@ -10,7 +48,7 @@ import router from "../router/index.js";
         <img src="../assets/Bilder/LogoGrafic.webp" alt="GPU">
       </div>
       <div id="gpuMain2">
-        <span>blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla</span>
+        <span>Hier kannst Du die Spezifikationen von GPUs verleichen, wie z.B. die Shader-Einheiten, Tensor Cores oder ROPs. Darunter fallen sowohl GPUs von Intel, AMD sowie Nvidia.</span>
         <csButton @click="router.go(-1)" content="GPU" class="mainAreaButton"/>
       </div>
     </div>
@@ -19,7 +57,7 @@ import router from "../router/index.js";
         <img src="../assets/Bilder/LogoCPU.webp" alt="CPU">
       </div>
       <div id="cpuMain2">
-        <span>blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla</span>
+        <span>Hier kannst Du CPUs von AMD und Intel vergleichen. Hier siehst Du dann z.B. die unterschiedlichen Kerne, Taktraten oder Cache.</span>
         <csButton @click="router.go(-1)" content="CPU" class="mainAreaButton"/>
       </div>
     </div>
@@ -28,18 +66,20 @@ import router from "../router/index.js";
         <img src="../assets/Bilder/LogoSSD.webp" alt="CPU">
       </div>
       <div id="ssdMain2">
-        <span>blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla</span>
+        <span>Hier kannst Du unterschiedliche SSDs vergleichen bis zur 5. Generation. Hier siehst Du dann Lese- und Schreibgeschwindigkeiten sowie die Geschwindigkeiten von Random Operationen.</span>
         <csButton @click="router.go(-1)" content="SSD" class="mainAreaButton"/>
       </div>
     </div>
   </div>
   <div id="newsArea">
     <h2 id="h2NewsArea">Neuigkeiten</h2>
-    <csButton @click="" content="Mehr Neuigkeiten" width="200px" class="mainAreaButton" id="moreNewsButton"/>
+    <csButton @click="goToNewsPage()" href="/news" content="Mehr Neuigkeiten" width="200px" class="mainAreaButton" id="moreNewsButton"/>
   </div>
 </template>
 
 <script>
+import router from "../router/index.js";
+
 export default {
   name: 'HomePage',
   data() {
@@ -48,8 +88,11 @@ export default {
     };
   },
   methods: {
-    }
-};
+      goToNewsPage() {
+        router.push('news')
+      }
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -139,9 +182,9 @@ export default {
 #newsArea {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 5fr 1fr;
+  grid-template-rows: auto auto auto auto;
   width: 100%;
-  height: 900px;
+  height: fit-content;
   background-color: var(--primaryColor2);
   box-sizing: border-box;
 
@@ -153,13 +196,15 @@ export default {
     padding-top: 20px;
     grid-row: 1;
     grid-column: 1;
+    margin-bottom: 30px;
   }
 
   #moreNewsButton {
-    grid-row: 3;
+    grid-row: 4;
     grid-column: 1;
     justify-self: center;
     height: 40px;
+    margin: 50px 50px;
   }
 }
 
@@ -201,6 +246,69 @@ export default {
   }
 }
 
+</style>
+
+<style lang="scss">
+.newsDiv0{
+  border-radius: 20px;
+  background-color: var(--primaryBackgroundColor1);
+  width: 80%;
+  height: fit-content;
+  box-sizing: border-box;
+  margin-left: 3%;
+  padding: 2% 2% 2% 2%;
+  box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
+
+  h3 {
+    color: var(--primaryGreen1);
+    word-break: break-word;
+    font-size: 1.7rem;
+  }
+
+  div {
+    word-break: break-word;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  p {
+    color: var(--primaryColor2);
+    font-size: 0.8rem;
+  }
+}
+
+.newsDiv1{
+  border-radius: 20px;
+  background-color: var(--primaryBackgroundColor1);
+  width: 80%;
+  height: fit-content;
+  box-sizing: border-box;
+  padding: 2% 2% 2% 2%;
+  margin-left: 17%;
+  margin-right: 3%;
+  box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
+  margin-top: 60px;
+
+  h3 {
+    color: var(--primaryGreen1);
+    word-break: break-word;
+    font-size: 1.7rem;
+  }
+
+  div {
+    word-break: break-word;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  p {
+    color: var(--primaryColor2);
+    font-size: 0.8rem;
+  }
+
+}
 </style>
 
 

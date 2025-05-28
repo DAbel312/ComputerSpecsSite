@@ -64,7 +64,7 @@ export default {
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-columns: 1fr;
     margin-top: 220px;
-    margin-bottom: 220px;
+    margin-bottom: 550px;
     background-color: var(--primaryBackgroundColor1);
     border-radius: 12px;
 

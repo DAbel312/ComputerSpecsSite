@@ -3,6 +3,7 @@ import HomePage from "../components/HomePage.vue";
 import Imprint from '../components/imprint.vue';
 import Admin from '../components/AdminPage.vue';
 import AdminLogInPage from "../components/AdminLogInPage.vue";
+import MoreNewsPage from "../components/MoreNewsPage.vue";
 
 /**
  * all routes in front-end
@@ -30,6 +31,11 @@ const routes = [
         path: "/admin_log_in",
         name: "Administrator Log In",
         component: AdminLogInPage
+    },
+    {
+        path: "/news",
+        name: "News Page",
+        component: MoreNewsPage
     }
 ]
 

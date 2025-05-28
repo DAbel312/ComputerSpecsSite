@@ -1,7 +1,7 @@
 
 <template>
   <form class="form" :style="{ width: props.width }">
-    <input class="input" :placeholder="props.placeholder" :type="props.type" v-model="model">
+    <input class="input" :placeholder="props.placeholder" :type="props.type" v-model="model" :maxlength="props.maxLength">
     <button class="reset" type="reset">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
@@ -17,10 +17,12 @@ const props = withDefaults(defineProps<{
   placeholder: string,
   width?: string,
   type: string,
+  maxLength: string
 }>(),{
   placeholder: "Input Placeholder",
   width: "250px",
-  type: "text"
+  type: "text",
+  maxLength: "30"
 });
 </script>
 
