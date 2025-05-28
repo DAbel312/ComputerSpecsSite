@@ -9,11 +9,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+/**
+ * class to save Article in db
+ */
+
 @Service
 public class ArticleService {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    /**
+     * saves article in db and maps ArticleDto to Article
+     * @param title
+     * @param content
+     * @param date
+     * @param author
+     * @return
+     */
 
     public ResponseEntity<?> createArticle(String title, String content, Date date, String author) {
         try {
