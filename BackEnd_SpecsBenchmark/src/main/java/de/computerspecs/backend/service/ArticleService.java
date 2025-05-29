@@ -47,12 +47,21 @@ public class ArticleService {
 
     /**
      * gets 2 newest articles from db
-     * when IntelliJ says it needs to cast, the imports are wrong
+     * when IntelliJ says it Pageable and PageRequest need to cast, the imports are wrong
      * @return
      */
 
     public List<Article> getArticle() {
         Pageable pageable = PageRequest.of(0, 2);
         return articleRepository.getArticleDesc(pageable);
+    }
+
+    /**
+     * gets all articles from db
+     * @return
+     */
+
+    public List<Article> getAllArticles() {
+        return articleRepository.getAllArticles();
     }
 }

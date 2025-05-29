@@ -44,4 +44,14 @@ public class ArticleController {
     public List<Article> getArticles() {
         return articleService.getArticle();
     }
-}
+
+    /**
+     * endpoint to get all articles from the db
+     * @return
+     */
+
+    @GetMapping("/getAll")
+    public List<Article> getAllArticles() {
+        return articleService.getAllArticles();
+    }
+ }
