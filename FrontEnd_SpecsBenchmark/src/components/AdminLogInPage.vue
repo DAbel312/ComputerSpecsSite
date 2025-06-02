@@ -7,8 +7,8 @@ import CsInput from "./CsInput.vue";
 <template>
     <div id="adminLogInDiv">
       <h4>Administrator Log In</h4>
-      <CsInput placeholder="Benutzername" id="userName" v-model="username" width="60%" type="text"></CsInput>
-      <CsInput placeholder="Password" type="password" id="password" v-model="password" width="60%"></CsInput>
+      <CsInput placeholder="Benutzername" id="userName" v-model="username" width="60%" type="text" maxLength="255"></CsInput>
+      <CsInput placeholder="Password" type="password" id="password" v-model="password" width="60%" maxLength="255"></CsInput>
       <cs-button @click="login()" content="Login" id="loginButton" width="45%"></cs-button>
       <p id="message">{{ message }}</p>
     </div>

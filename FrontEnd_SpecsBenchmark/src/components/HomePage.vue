@@ -102,6 +102,7 @@ export default {
   grid-template-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
+  background-color: var(--primaryBackgroundColor1);
 }
 
 .mainAreaHome {
@@ -260,7 +261,7 @@ export default {
   box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
 
   h3 {
-    color: var(--primaryGreen1);
+    color: var(--textGreen);
     word-break: break-word;
     font-size: 1.7rem;
   }
@@ -291,7 +292,7 @@ export default {
   margin-top: 60px;
 
   h3 {
-    color: var(--primaryGreen1);
+    color: var(--textGreen);
     word-break: break-word;
     font-size: 1.7rem;
   }

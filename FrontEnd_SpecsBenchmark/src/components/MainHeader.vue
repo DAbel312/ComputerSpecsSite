@@ -6,8 +6,9 @@ import router from "../router/index.js";
   <header id="responsive-header">
     <nav class="navbar">
       <div class="navdiv">
+        <!-- <img src="../assets/Bilder/TechBenchLogo.webp" alt="TechBenchLogo" id="techBenchLogo"> -->
         <a class="name" id="titleHeader" href="#">
-          Computer Archiv
+          Tech Bench
         </a>
         <ul>
           <li><a href="#" class="active">GPU</a></li>

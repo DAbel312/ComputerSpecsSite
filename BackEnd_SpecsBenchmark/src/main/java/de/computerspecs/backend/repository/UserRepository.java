@@ -13,8 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO \"user\" (username, password) VALUES (:username, :password)", nativeQuery = true)
-    void createAdminAccount(String username, String password);
+    @Query(value = "INSERT INTO \"user\" (id, username, password) VALUES (:id ,:username, :password)", nativeQuery = true)
+    void createAdminAccount(int id, String username, String password);
 
     boolean existsByUsername(String username);
 

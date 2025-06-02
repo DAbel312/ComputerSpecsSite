@@ -40,7 +40,7 @@ public class LoginService {
 
             if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
                 String id = String.valueOf(user.getId());
-                String token = jwtService.generateJWT(id, "computerspecs", username, 100 * 60 * 15);
+                String token = jwtService.generateJWT(id, "computerspecs", username, 100 * 60 * 15 * 15);
 
                 return ResponseEntity.ok(new LoginResponse(token));
             }

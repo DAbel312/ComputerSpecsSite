@@ -81,7 +81,7 @@ export default {
       transition: border-radius 0.3s ease;
       border: none;
       box-sizing: border-box;
-      padding: 2% 1.5% 2% 1.5%;
+      padding: 15px 15px 15px 15px;
     }
 
     #newsTextarea:focus-within {

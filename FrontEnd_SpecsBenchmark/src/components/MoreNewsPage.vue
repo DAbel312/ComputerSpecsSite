@@ -76,7 +76,7 @@ export default {
   #mainDiv {
     padding: 1% 1% 1% 1%;
     box-sizing: border-box;
-    background-color: var(--primaryBackgroundColor1);
+    background-color: var(--primaryDarkerBackgroundColor1);
   }
 
   h1 {
@@ -113,7 +113,7 @@ export default {
   .newsDivTitle {
     word-break: break-word;
     text-align: center;
-    color: var(--primaryGreen1);
+    color: var(--textGreen);
     font-size: 1.7rem;
   }
 

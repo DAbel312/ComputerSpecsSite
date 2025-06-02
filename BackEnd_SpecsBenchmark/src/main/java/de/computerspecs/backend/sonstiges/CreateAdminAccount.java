@@ -31,7 +31,7 @@ public class CreateAdminAccount implements CommandLineRunner {
         String password = "admin";
 
         if (!userRepository.existsByUsername(username)) {
-            userRepository.createAdminAccount(username, bCryptPasswordEncoder.encode(password));
+            userRepository.createAdminAccount(1, username, bCryptPasswordEncoder.encode(password));
             System.out.println("Admin account created.");
         } else {
             System.out.println("Admin account already exists.");

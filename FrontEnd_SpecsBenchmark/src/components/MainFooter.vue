@@ -28,7 +28,7 @@ footer {
   place-items: center;
   margin-left: 20%;
   margin-right: 20%;
-  padding-top: 90px;
+  padding-top: 140px;
 }
 
 .footerLink {
