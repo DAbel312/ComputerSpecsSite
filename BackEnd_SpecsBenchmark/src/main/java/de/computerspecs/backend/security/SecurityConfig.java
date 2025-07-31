@@ -41,14 +41,19 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/admin/**").authenticated()
+                        .requestMatchers("/api/admin/login", "/api/article/get", "/api/article/getAll").permitAll()
+                        .requestMatchers("/admin/**", "/api/article/create").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+    /**
+     * cors configurer
+     * @return
+     */
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -73,10 +78,22 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * encodes password to put them like this in db later
+     * @return
+     */
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    /**
+     * authentication manager
+     * @param config
+     * @return
+     * @throws Exception
+     */
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

@@ -11,13 +11,10 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
-    @Query("SELECT id FROM User WHERE password = :password AND username = :username")
-    Optional<User> findIdByUsernameAndPassword(String password, String username);
-
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO \"user\" (username, password) VALUES (:username, :password)", nativeQuery = true)
-    void createAdminAccount(String username, String password);
+    @Query(value = "INSERT INTO \"user\" (id, username, password) VALUES (:id ,:username, :password)", nativeQuery = true)
+    void createAdminAccount(int id, String username, String password);
 
     boolean existsByUsername(String username);
 
