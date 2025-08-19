@@ -4,6 +4,8 @@ import Imprint from '../components/imprint.vue';
 import Admin from '../components/AdminPage.vue';
 import AdminLogInPage from "../components/AdminLogInPage.vue";
 import MoreNewsPage from "../components/MoreNewsPage.vue";
+import Article from "../components/Article.vue";
+import NotFound from '../components/NotFound.vue';
 
 /**
  * all routes in front-end
@@ -36,6 +38,17 @@ const routes = [
         path: "/news",
         name: "News Page",
         component: MoreNewsPage
+    },
+    {
+        path: '/article/:id',
+        name: "article",
+        component: Article,
+        props: true
+    },
+    {
+        path: "/notFound",
+        name: "notFound",
+        component: NotFound
     }
 ]
 

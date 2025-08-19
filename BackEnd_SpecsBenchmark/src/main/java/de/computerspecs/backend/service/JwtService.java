@@ -45,7 +45,7 @@ public class JwtService {
                 .setIssuedAt(now)
                 .setSubject(subject)
                 .setIssuer(issuer)
-                .signWith(signatureAlgorithm, signingKey);
+                .signWith(signingKey, signatureAlgorithm);
 
         if (ttlMillis > 0) {
             long expMillis = nowMillis + ttlMillis;

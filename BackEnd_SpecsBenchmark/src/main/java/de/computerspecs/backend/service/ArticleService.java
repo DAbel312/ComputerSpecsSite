@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
@@ -52,7 +53,7 @@ public class ArticleService {
      */
 
     public List<Article> getArticle() {
-        Pageable pageable = PageRequest.of(0, 2);
+        Pageable pageable = PageRequest.of(0, 3);
         return articleRepository.getArticleDesc(pageable);
     }
 
@@ -63,5 +64,24 @@ public class ArticleService {
 
     public List<Article> getAllArticles() {
         return articleRepository.getAllArticles();
+    }
+
+    /**
+     * gets article by id from db
+     * @param id
+     * @return
+     */
+
+    public Article getArticleById(int id) {
+        return articleRepository.getReferenceById((long) id);
+    }
+
+    /**
+     * gets three random articles from db
+     * @return
+     */
+
+    public List<Article> getRandomArticle() {
+        return articleRepository.getRandomArticles(PageRequest.of(0, 3));
     }
 }

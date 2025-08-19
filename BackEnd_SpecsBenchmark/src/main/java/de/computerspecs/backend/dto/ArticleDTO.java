@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class ArticleDTO {
 
+    private long id;
+
     private String title;
 
     private String content;
@@ -20,6 +22,14 @@ public class ArticleDTO {
     }
 
     public ArticleDTO() {}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

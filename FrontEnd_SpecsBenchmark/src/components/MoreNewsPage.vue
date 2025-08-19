@@ -17,14 +17,22 @@ onMounted(async () => {
     const newsDivContent = document.createElement('div');
     const newsDivDate = document.createElement('p');
     const newsDivAuthor = document.createElement('p');
+    const newsDivCompleteButton = document.createElement('input');
+
+    newsDivCompleteButton.type = "button";
+    newsDivCompleteButton.value = "Weiter...";
 
     newsDivTitle.textContent = response.data[i].title;
-    newsDivContent.textContent = response.data[i].content;
+
+    let contentNewsDiv = response.data[i].content.slice(0, 350) + "...";
+
+    newsDivContent.textContent = contentNewsDiv;
     newsDivDate.textContent = ("Datum: " + response.data[i].date).slice(0, 17);
     newsDivAuthor.textContent = "Autor: " + response.data[i].author;
 
     newsDiv.appendChild(newsDivTitle);
     newsDiv.appendChild(newsDivContent);
+    newsDiv.appendChild(newsDivCompleteButton);
     newsDiv.appendChild(newsDivDate);
     newsDiv.appendChild(newsDivAuthor);
 
@@ -33,6 +41,7 @@ onMounted(async () => {
     newsDivContent.className = "newsDivContent";
     newsDivDate.className = "newsDivDate"
     newsDivAuthor.className = "newsDivAuthor";
+    newsDivCompleteButton.className = "completeNewsButton";
   }
 
   const numberPages = Math.ceil(response.data.length / 5);
@@ -76,11 +85,13 @@ export default {
   #mainDiv {
     padding: 1% 1% 1% 1%;
     box-sizing: border-box;
+    min-height: 530px;
     background-color: var(--primaryDarkerBackgroundColor1);
   }
 
   h1 {
     text-align: center;
+    color: var(--primaryBackgroundColor1);
   }
 
   #pages {

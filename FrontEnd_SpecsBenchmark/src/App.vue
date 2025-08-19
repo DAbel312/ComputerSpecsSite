@@ -8,7 +8,7 @@ import footerComponent from './components/MainFooter.vue';
     <HeaderComponent/>
   </nav>
   <main>
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
   </main>
   <footer>
     <footerComponent/>

@@ -1,44 +1,27 @@
 <script setup>
 import CsButton from "./CsButton.vue";
 import router from "../router/index.js";
+import NewsComponent from "./NewsComponent.vue";
 import {onMounted} from "vue";
 import axios from "axios";
+import { ref } from 'vue';
 
-onMounted(() => {
+const articles = ref([])
 
-  const newsArea = document.getElementById('newsArea');
-  async function getArticles() {
-    const response = await axios.get('http://localhost:5174/api/article/get');
+defineOptions({ name: 'HomePage' })        
 
-    for (let i = 0; i < 2; i++) {
-      const newsDiv = document.createElement('div');
-      newsArea.appendChild(newsDiv);
+onMounted(async () => {
+  try {
+    const { data } = await axios.get('http://localhost:5174/api/article/get');
 
-      const newsDivTitle = document.createElement('H3');
-      const newsDivContent = document.createElement('div');
-      const newsDivDate = document.createElement('p');
-      const newsDivAuthor = document.createElement('p');
-
-      newsDivTitle.textContent = response.data[i].title;
-      newsDivContent.textContent = response.data[i].content;
-      newsDivDate.textContent = ("Datum: " + response.data[i].date).slice(0, 17);
-      newsDivAuthor.textContent = "Autor: " + response.data[i].author;
-
-      newsDiv.appendChild(newsDivTitle);
-      newsDiv.appendChild(newsDivContent);
-      newsDiv.appendChild(newsDivDate);
-      newsDiv.appendChild(newsDivAuthor);
-
-      newsDiv.className = "newsDiv" + i;
-      newsDivTitle.className = "newsDivTitle";
-      newsDivContent.className = "newsDivContent";
-      newsDivDate.className = "newsDivDate"
-      newsDivAuthor.className = "newsDivAuthor";
-    }
+    articles.value = Array.isArray(data) ? data : [];
+    console.log(articles.value);
+  } catch (err) {
+    console.error("Fehler beim Laden der Artikel " + err);
   }
+  })
 
-  getArticles();
-})
+  const goToNewsPage = ()  => router.push('news');
 </script>
 
 <template>
@@ -73,27 +56,12 @@ onMounted(() => {
   </div>
   <div id="newsArea">
     <h2 id="h2NewsArea">Neuigkeiten</h2>
+    <div id="newsComponents" v-for="(article, idx) in articles" :key="article.id ?? idx">
+    <NewsComponent :author="article.author" :title="article.title" :content="article.content" :date="article.date" :id="article.id"/>
+    </div>
     <csButton @click="goToNewsPage()" href="/news" content="Mehr Neuigkeiten" width="200px" class="mainAreaButton" id="moreNewsButton"/>
   </div>
 </template>
-
-<script>
-import router from "../router/index.js";
-
-export default {
-  name: 'HomePage',
-  data() {
-    return {
-      isCreateNewsVisible: false,
-    };
-  },
-  methods: {
-      goToNewsPage() {
-        router.push('news')
-      }
-  }
-}
-</script>
 
 <style scoped lang="scss">
 
@@ -201,7 +169,7 @@ export default {
   }
 
   #moreNewsButton {
-    grid-row: 4;
+    grid-row: 5;
     grid-column: 1;
     justify-self: center;
     height: 40px;
