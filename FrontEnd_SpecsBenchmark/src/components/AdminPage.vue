@@ -7,13 +7,11 @@
     <p id="status" :class="{ 'text-red': isError, 'text-green': !isError }">{{ status }}</p>
     <div>
       <h4>Bild hochladen (.png)</h4>
-        <form @submit.prevent="submit">
-        <input type="file" accept="image/png" @change="onFile" />
+        <input type="file" accept="image/png" @change="onFile" id="selectFile" />
         <p v-if="error" id="statusImageError">Fehler beim Hochladen des Bildes</p>
         <pre v-if="response" id="statusImage">Bild wurde erfolgreich hochgeladen.</pre>
-      </form>
     </div>
-    <CsButton content="Veröffentlichen" width="35%" id="newsPublish" @click="createArticle(); createArticleWithImage()"></CsButton>
+    <CsButton content="Veröffentlichen" width="35%" id="newsPublish" @click="createArticleWithImage()"></CsButton>
   </div>
 </template>
 
@@ -28,6 +26,11 @@ const loading = ref(false)
 const error = ref('')
 const response = ref('')
 
+const title = ref('');
+const content = ref('');
+const isError = ref(false);
+const status = ref('');
+
 function onFile(e) {
   const f = e.target.files?.[0]
   if (!f) {
@@ -40,24 +43,6 @@ function onFile(e) {
     return
   }
   file.value = f;
-}
-
-async function submit() {
-  if (!file.value) return
-  loading.value = true
-  error.value = ''
-  try {
-    const fd = new FormData()
-    fd.append('image', file.value, file.value.name)
-
-    const res = await axios.post('http://localhost:5174/api/image/post', fd)
-
-    response.value = JSON.stringify(res.data, null, 2)
-  } catch (e) {
-    error.value = e?.response?.data?.message || e.message
-  } finally {
-    loading.value = false
-  }
 }
 
 async function createArticleWithImage() {
@@ -74,53 +59,29 @@ async function createArticleWithImage() {
 
     const idImage = await axios.get('http://localhost:5174/api/image/getInfo/' + file.value.name)
 
-    console.log(idImage)
+    const token = localStorage.getItem('jwt');
+    const payloadBase64 = token.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    const payload = JSON.parse(payloadJson);
+
+    const authorToken = payload.sub;
+
+    await axios.post('http://localhost:5174/api/article/create', {
+          title: title.value,
+          content: content.value,
+          author: authorToken,
+          imageId: idImage.data[0]
+        });
+
+    this.isError = false;
+
+    this.status = "Artikel erfolgreich veröffentlicht."
   } catch (e) {
+    this.isError = true;
+    this.status = "Veröffentlichung fehlgeschlagen. Bitte kontaktieren Sie einen Administrator."
     error.value = e?.response?.data?.message || e.message
   } finally {
     loading.value = false
-  }
-}
-
-</script>
-
-<script>
-import axios from "axios";
-
-export default {
-  data() {
-    return {
-      title: "",
-      content: "",
-      author: "",
-      status: "",
-      isError: ""
-    }
-  },
-  methods: {
-    async createArticle() {
-      const token = localStorage.getItem('jwt');
-      const payloadBase64 = token.split('.')[1];
-      const payloadJson = atob(payloadBase64);
-      const payload = JSON.parse(payloadJson);
-
-      const authorToken = payload.sub;
-      try {
-        await axios.post('http://localhost:5174/api/article/create', {
-          title: this.title,
-          content: this.content,
-          author: authorToken
-        });
-
-        this.isError = false;
-
-        this.status = "Artikel erfolgreich veröffentlicht."
-
-      } catch(error) {
-        this.isError = true;
-        this.status = "Veröffentlichung fehlgeschlagen. Bitte kontaktieren Sie einen Administrator."
-      }
-    }
   }
 }
 
@@ -176,4 +137,11 @@ export default {
     color: red;
   }
 
+  #selectFile {
+    margin-top: 5px;
+  }
+
+  #statusImageError, #statusImage {
+    margin-top: 20px;
+  }
 </style>

@@ -59,9 +59,9 @@ public class ImageDataController {
      * @return
      */
 
-    @GetMapping("/get/{name}")
-    public ResponseEntity<?>  getImageByName(@PathVariable("name") String name){
-        byte[] image = imageDataService.getImage(name);
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?>  getImageById(@PathVariable("id") int id){
+        byte[] image = imageDataService.getImage(id);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))

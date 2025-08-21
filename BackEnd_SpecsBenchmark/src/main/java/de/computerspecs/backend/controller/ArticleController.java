@@ -5,11 +5,9 @@ import de.computerspecs.backend.dto.ArticleDTO;
 import de.computerspecs.backend.entity.Article;
 import de.computerspecs.backend.service.ArticleMapperService;
 import de.computerspecs.backend.service.ArticleService;
-import jakarta.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -44,12 +42,12 @@ public class ArticleController {
     }
 
     /**
-     * endpoint to get all articles from database
+     * endpoint to get 3 latest articles from database
      * @return
      */
 
     @GetMapping("/get")
-    public List<Article> getArticles() {
+    public List<ArticleDTO> getArticles() {
         return articleService.getArticle();
     }
 
@@ -71,7 +69,7 @@ public class ArticleController {
 
     @GetMapping("/getById/{id}")
     public ArticleDTO getArticleById(@PathVariable("id") int id) {
-        return articleMapperService.mapArticleToArticleDTO(articleService.getArticleById(id));
+        return articleService.getArticleById(id);
     }  
     
     /**

@@ -14,7 +14,8 @@ public class ArticleDTO {
 
     private String author;
 
-    public ArticleDTO(String title, String content, Date date, String author) {
+    public ArticleDTO(long id, String title, String content, Date date, String author) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;

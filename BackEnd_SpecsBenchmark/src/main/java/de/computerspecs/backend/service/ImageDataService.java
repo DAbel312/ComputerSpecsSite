@@ -66,8 +66,8 @@ public class ImageDataService {
      */
 
     @Transactional
-    public byte[] getImage(String name) {
-        Optional<ImageData> dbImage = imageDataRepository.findByName(name);
+    public byte[] getImage(int id) {
+        Optional<ImageData> dbImage = imageDataRepository.findById((long)id);
         byte[] image = ImageUtil.decompressImage(dbImage.get().getImageData());
         return image;
     }

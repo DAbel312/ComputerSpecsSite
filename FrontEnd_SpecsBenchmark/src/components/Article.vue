@@ -28,7 +28,8 @@ onMounted(async () => {
     try {
         const response = await axios.get<Article>('http://localhost:5174/api/article/getById/' + props.id);
         data.value = response.data;
-        console.log(response.data);
+
+        const responseImage = await axios.get('http://localhost:5174/api/image/get/' + 1)
     } catch (err) {
         console.error("The article with the id " + props.id + " could not be loaded. Error: " + err);
         router.push('/notFound');

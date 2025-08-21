@@ -55,7 +55,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         AntPathMatcher matcher = new AntPathMatcher();
 
-        if (path.equals("/api/admin/login") || path.equals("/api/article/get") || path.equals("/api/article/getAll") || matcher.match("/api/article/getById/**", path) || path.equals("/api/article/getRandom") || matcher.match("/api/image/get/**", path)) {
+        if (path.equals("/api/admin/login") || 
+            path.equals("/api/article/get") || 
+            path.equals("/api/article/getAll") || 
+            matcher.match("/api/article/getById/**", path) || 
+            path.equals("/api/article/getRandom") || 
+            matcher.match("/api/image/get/**", path) || 
+            matcher.match("/api/image/get/**", path)
+            ) {
             filterChain.doFilter(request, response);
             return;
         }

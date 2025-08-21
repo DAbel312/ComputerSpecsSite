@@ -1,5 +1,6 @@
 package de.computerspecs.backend.service;
 
+import de.computerspecs.backend.dto.ArticleDTO;
 import de.computerspecs.backend.entity.Article;
 import de.computerspecs.backend.entity.ImageData;
 import de.computerspecs.backend.repository.ArticleRepository;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
@@ -66,7 +66,7 @@ public class ArticleService {
      * @return
      */
 
-    public List<Article> getArticle() {
+    public List<ArticleDTO> getArticle() {
         Pageable pageable = PageRequest.of(0, 3);
         return articleRepository.getArticleDesc(pageable);
     }
@@ -86,8 +86,8 @@ public class ArticleService {
      * @return
      */
 
-    public Article getArticleById(int id) {
-        return articleRepository.getReferenceById((long) id);
+    public ArticleDTO getArticleById(int id) {
+        return articleRepository.getArticleByArticleId((long) id);
     }
 
     /**
