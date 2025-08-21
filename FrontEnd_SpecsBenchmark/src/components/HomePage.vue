@@ -15,7 +15,6 @@ onMounted(async () => {
     const { data } = await axios.get('http://localhost:5174/api/article/get');
 
     articles.value = Array.isArray(data) ? data : [];
-    console.log(articles.value);
   } catch (err) {
     console.error("Fehler beim Laden der Artikel " + err);
   }

@@ -1,7 +1,10 @@
 package de.computerspecs.backend.service;
 
 import de.computerspecs.backend.entity.Article;
+import de.computerspecs.backend.entity.ImageData;
 import de.computerspecs.backend.repository.ArticleRepository;
+import de.computerspecs.backend.repository.ImageDataRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -23,22 +26,33 @@ public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    ImageDataRepository imageDataRepository;
+
     /**
      * saves article in db and maps ArticleDto to Article
      * @param title
      * @param content
      * @param date
      * @param author
+     * @param imageId
      * @return
      */
 
-    public ResponseEntity<?> createArticle(String title, String content, Date date, String author) {
+    public ResponseEntity<?> createArticle(String title, String content, Date date, String author, Long imageId) {
         try {
             Article article = new Article();
             article.setTitle(title);
             article.setContent(content);
             article.setAuthor(author);
             article.setDate(date);
+
+            if (imageId != null) {
+                ImageData image = imageDataRepository.findById(imageId)
+                        .orElseThrow(() -> new RuntimeException("Image not found: " + imageId));
+                article.setImageData(image);
+            }
+
             articleRepository.save(article);
             return ResponseEntity.status(HttpStatus.CREATED).body("Article was created successfully!");
         } catch (Exception e) {

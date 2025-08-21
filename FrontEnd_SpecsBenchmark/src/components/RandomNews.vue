@@ -65,13 +65,16 @@ h2 {
 
 #moreNews {
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 33.3% 33.3% 33.3%;
     grid-template-rows: 1fr;
     box-sizing: border-box;
     padding-bottom: 50px;
 }
 
 .moreNewsContainer {
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
+    grid-template-columns: 100%;
     height: 350px;
     width: 80%;
     justify-self: center;
@@ -100,5 +103,16 @@ h2 {
 #buttonDiv {
     background-color: var(--primaryBackgroundColor1);
     justify-self: center;
+}
+
+@media (max-width: 800px) {
+    #moreNews {
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto auto;
+    }
+
+    .moreNewsContainer {
+        margin-top: 30px;
+    }
 }
 </style>
