@@ -14,6 +14,17 @@ public class ArticleDTO {
 
     private String author;
 
+    private Long imageId;
+
+    public ArticleDTO(long id, String title, String content, Date date, String author, Long imageId) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.author = author;
+        this.imageId = imageId;
+    }
+
     public ArticleDTO(long id, String title, String content, Date date, String author) {
         this.id = id;
         this.title = title;
@@ -62,5 +73,13 @@ public class ArticleDTO {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
     }
 }

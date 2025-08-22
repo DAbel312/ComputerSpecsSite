@@ -21,9 +21,9 @@ public class Article {
 
     private String author;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id", unique = true)
-    private ImageData image;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true) 
+    @JoinColumn(name = "image_id")
+    private ImageData image;   
 
     public Article() {}
 

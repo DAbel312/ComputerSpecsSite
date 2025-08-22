@@ -23,9 +23,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("""
     SELECT new de.computerspecs.backend.dto.ArticleDTO(
-        a.id, a.title, a.content, a.date, a.author
+        a.id, a.title, a.content, a.date, a.author, i.id
     )
     FROM Article a
+    LEFT JOIN a.image i
     WHERE a.id = :id
     """)
     ArticleDTO getArticleByArticleId(@Param("id") long id);

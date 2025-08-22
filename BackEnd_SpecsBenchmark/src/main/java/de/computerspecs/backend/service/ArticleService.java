@@ -5,6 +5,7 @@ import de.computerspecs.backend.entity.Article;
 import de.computerspecs.backend.entity.ImageData;
 import de.computerspecs.backend.repository.ArticleRepository;
 import de.computerspecs.backend.repository.ImageDataRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +40,7 @@ public class ArticleService {
      * @return
      */
 
+     @Transactional
     public ResponseEntity<?> createArticle(String title, String content, Date date, String author, Long imageId) {
         try {
             Article article = new Article();
@@ -48,15 +50,15 @@ public class ArticleService {
             article.setDate(date);
 
             if (imageId != null) {
-                ImageData image = imageDataRepository.findById(imageId)
-                        .orElseThrow(() -> new RuntimeException("Image not found: " + imageId));
+                ImageData image = imageDataRepository.getReferenceById(imageId);
                 article.setImageData(image);
             }
 
             articleRepository.save(article);
             return ResponseEntity.status(HttpStatus.CREATED).body("Article was created successfully!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: Article could not be created!");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
         }
     }
 

@@ -78,7 +78,7 @@ async function createArticleWithImage() {
     this.status = "Artikel erfolgreich veröffentlicht."
   } catch (e) {
     this.isError = true;
-    this.status = "Veröffentlichung fehlgeschlagen. Bitte kontaktieren Sie einen Administrator."
+    this.status = "Veröffentlichung fehlgeschlagen."
     error.value = e?.response?.data?.message || e.message
   } finally {
     loading.value = false

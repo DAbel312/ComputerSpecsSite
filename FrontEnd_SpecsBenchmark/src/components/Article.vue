@@ -4,6 +4,7 @@
         <p id="author">Ein Artikel von {{  data?.author }}</p>
         <p id="date">Datum: {{ data?.date.slice(0, 10) }}</p>
         <pre id="text">{{ data?.content }}</pre>
+        <img :src="`http://localhost:5174/api/image/get/${imageId}`" alt="Artikel Bild" id="picture">
     </div>
     <div id="moreNews">
         <RandomNews></RandomNews>
@@ -24,12 +25,15 @@ const props = withDefaults(defineProps<{
 
 const data = ref<Article | null>(null);
 
+const imageId = ref()
+
 onMounted(async () => {
     try {
         const response = await axios.get<Article>('http://localhost:5174/api/article/getById/' + props.id);
         data.value = response.data;
 
-        const responseImage = await axios.get('http://localhost:5174/api/image/get/' + 1)
+        imageId.value = response.data.imageId;
+
     } catch (err) {
         console.error("The article with the id " + props.id + " could not be loaded. Error: " + err);
         router.push('/notFound');
