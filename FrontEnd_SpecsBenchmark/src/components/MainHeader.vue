@@ -54,6 +54,8 @@
 #responsive-header {
   background: var(--primaryColor1);
   box-shadow: 0 4px 8px var(--primaryGreen1);
+  position: relative;
+  z-index: 20;
 }
 
 #responsive-header nav {

@@ -2,7 +2,7 @@
     <div id="newsCard">
         <h3>{{ title }}</h3>
         <div id="newsContent">
-            {{ content.slice(0, 350) + "..." }}
+            {{ content.slice(0, 1500) + "..." }}
         </div>
         <div id="buttonDiv">
             <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="props.id != null ? goToFullArticle(props.id) : null"></CsButton>

@@ -1,7 +1,7 @@
 <template>
   <footer>
     <div id="footerLinks">
-      <a href="#" class="footerLink">Impressum</a>
+      <a href="/#/impressum" class="footerLink">Impressum</a>
       <a href="#" class="footerLink">Kontakt</a>
       <a href="#" class="footerLink">Über diese Seite</a>
     </div>

@@ -51,6 +51,11 @@ async function switchPage(page: number) {
   const firstSliceNumber = secondSliceNumber - 5;
 
   articlesShown.value = articles.value.slice(firstSliceNumber, secondSliceNumber);
+  
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 </script>
 

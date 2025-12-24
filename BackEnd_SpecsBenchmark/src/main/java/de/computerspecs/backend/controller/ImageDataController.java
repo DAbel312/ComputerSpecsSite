@@ -68,9 +68,14 @@ public class ImageDataController {
                 .body(image);
     }
 
+    /**
+     * gets image id by image name
+     * @param name
+     * @return
+     */
+
     @GetMapping("/getInfo/{name}")
     public List<Long> getImageIdByName(@PathVariable("name") String name) {
-        System.out.println("NAMENAMENAME:::" + name);
         return imageDataService.getImageId(name);
     }
 }

@@ -1,5 +1,7 @@
 package de.computerspecs.backend.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Builder;
 
@@ -20,17 +22,17 @@ public class ImageData {
     @Column(name = "imagedata", length = 1000)
     private byte[] imageData;
 
-    @OneToOne(mappedBy = "image")
-    private Article article;
+    @OneToMany(mappedBy = "image")
+    private List<Article> articles;
 
     public ImageData() {}
 
-    public ImageData(long id, String name, String type, byte[] imageData, Article article) {
+    public ImageData(long id, String name, String type, byte[] imageData, List<Article> articles) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.imageData = imageData;
-        this.article = article;
+        this.articles = articles;
     }
 
     public String getName() {
@@ -57,12 +59,12 @@ public class ImageData {
         this.imageData = imageData;
     }
 
-    public Article getArticle() {
-        return article;
+    public List<Article> getArticles() {
+        return articles;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setArticle(List<Article> articles) {
+        this.articles = articles;
     }
 }
 

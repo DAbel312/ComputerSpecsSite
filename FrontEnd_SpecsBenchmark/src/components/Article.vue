@@ -3,8 +3,8 @@
         <h1 id="title">{{ data?.title }}</h1>
         <p id="author">Ein Artikel von {{  data?.author }}</p>
         <p id="date">Datum: {{ data?.date.slice(0, 10) }}</p>
-        <pre id="text">{{ data?.content }}</pre>
         <img :src="`http://localhost:5174/api/image/get/${imageId}`" alt="Artikel Bild" id="picture">
+        <pre id="text">{{ data?.content }}</pre>
     </div>
     <div id="moreNews">
         <RandomNews></RandomNews>
@@ -52,6 +52,7 @@ onMounted(async () => {
     padding: 2% 2% 2% 2%;
     height: fit-content;
     max-width: 100%;
+    overflow: auto;
 }
 
 #title {
@@ -69,6 +70,11 @@ onMounted(async () => {
     margin-bottom: 200px;
     white-space: pre-wrap;
     max-width: 100%;
+}
+
+img {
+    width: 50%;
+    float: right;
 }
 
 @media (max-width: 400px) {
