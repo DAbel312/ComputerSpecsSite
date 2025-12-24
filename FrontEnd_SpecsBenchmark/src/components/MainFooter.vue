@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <footer>
     <div id="footerLinks">
@@ -12,6 +8,10 @@
     <!-- <img src="../assets/Bilder/LogoPage.webp" alt="PC Logo" id="pclogo"> -->
   </footer>
 </template>
+
+<script setup>
+
+</script>
 
 <style lang="scss">
 footer {

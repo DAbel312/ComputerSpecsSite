@@ -2,7 +2,6 @@ package de.computerspecs.backend.controller;
 
 import de.computerspecs.backend.dto.ArticleCreateDTO;
 import de.computerspecs.backend.dto.ArticleDTO;
-import de.computerspecs.backend.entity.Article;
 import de.computerspecs.backend.service.ArticleMapperService;
 import de.computerspecs.backend.service.ArticleService;
 
@@ -57,7 +56,7 @@ public class ArticleController {
      */
 
     @GetMapping("/getAll")
-    public List<Article> getAllArticles() {
+    public List<ArticleDTO> getAllArticles() {
         return articleService.getAllArticles();
     }
 

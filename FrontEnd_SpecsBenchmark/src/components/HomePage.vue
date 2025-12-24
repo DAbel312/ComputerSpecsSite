@@ -1,28 +1,3 @@
-<script setup>
-import CsButton from "./CsButton.vue";
-import router from "../router/index.js";
-import NewsComponent from "./NewsComponent.vue";
-import {onMounted} from "vue";
-import axios from "axios";
-import { ref } from 'vue';
-
-const articles = ref([])
-
-defineOptions({ name: 'HomePage' })        
-
-onMounted(async () => {
-  try {
-    const { data } = await axios.get('http://localhost:5174/api/article/get');
-
-    articles.value = Array.isArray(data) ? data : [];
-  } catch (err) {
-    console.error("Fehler beim Laden der Artikel " + err);
-  }
-  })
-
-  const goToNewsPage = ()  => router.push('news');
-</script>
-
 <template>
   <div id="mainArea">
     <div id="gpuMain" class="mainAreaHome">
@@ -56,11 +31,36 @@ onMounted(async () => {
   <div id="newsArea">
     <h2 id="h2NewsArea">Neuigkeiten</h2>
     <div id="newsComponents" v-for="(article, idx) in articles" :key="article.id ?? idx">
-    <NewsComponent :author="article.author" :title="article.title" :content="article.content" :date="article.date" :id="article.id"/>
+      <NewsComponent :author="article.author" :title="article.title" :content="article.content" :date="article.date" :id="article.id"/>
     </div>
     <csButton @click="goToNewsPage()" href="/news" content="Mehr Neuigkeiten" width="200px" class="mainAreaButton" id="moreNewsButton"/>
   </div>
 </template>
+
+<script setup>
+import CsButton from "./CsButton.vue";
+import router from "../router/index.js";
+import NewsComponent from "./NewsComponent.vue";
+import {onMounted} from "vue";
+import axios from "axios";
+import { ref } from 'vue';
+
+const articles = ref([])
+
+defineOptions({ name: 'HomePage' })        
+
+onMounted(async () => {
+  try {
+    const { data } = await axios.get('http://localhost:5174/api/article/get');
+
+    articles.value = Array.isArray(data) ? data : [];
+  } catch (err) {
+    console.error("Fehler beim Laden der Artikel " + err);
+  }
+  })
+
+  const goToNewsPage = ()  => router.push('news');
+</script>
 
 <style scoped lang="scss">
 

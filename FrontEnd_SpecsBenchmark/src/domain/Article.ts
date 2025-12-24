@@ -3,6 +3,6 @@ export interface Article {
     author: string;
     content: string;
     date: string;
-    id?: number;
+    id: number;
     imageId?: number;
 }

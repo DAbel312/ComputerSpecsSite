@@ -30,6 +30,9 @@ public class ArticleService {
     @Autowired
     ImageDataRepository imageDataRepository;
 
+    @Autowired
+    ArticleMapperService articleMapperService;
+
     /**
      * saves article in db and maps ArticleDto to Article
      * @param title
@@ -78,8 +81,11 @@ public class ArticleService {
      * @return
      */
 
-    public List<Article> getAllArticles() {
-        return articleRepository.getAllArticles();
+    public List<ArticleDTO> getAllArticles() {
+        return articleRepository.getAllArticles()
+                                .stream()
+                                .map(articleMapperService::mapArticleToArticleDTO)
+                                .toList();
     }
 
     /**

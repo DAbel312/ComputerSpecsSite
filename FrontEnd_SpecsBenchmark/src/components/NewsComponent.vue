@@ -5,7 +5,7 @@
             {{ content.slice(0, 350) + "..." }}
         </div>
         <div id="buttonDiv">
-            <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="goToFullArticle(props.id)"></CsButton>
+            <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="props.id != null ? goToFullArticle(props.id) : null"></CsButton>
         </div>
         <p>{{ date.slice(0, 10) }}</p>
         <p>{{ author }}</p>
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<{
   date: "date",
 })
 
-function goToFullArticle (id) {
+function goToFullArticle (id: number) {
   try {
     router.push({ name: 'article', params: { id: id } })
   } catch (err) {

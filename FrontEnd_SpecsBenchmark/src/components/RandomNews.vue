@@ -5,21 +5,21 @@
             <h3>{{ articles[0].title }}</h3>
             <p>{{ articles[0].content.slice(0, 200) + "..." }}</p>
             <div id="buttonDiv">
-                <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="goToFullArticle(articles[0].id)"></CsButton>
+                <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="articles[1].id != null ? goToFullArticle(articles[1].id) : null"></CsButton>
             </div>
         </div>
         <div class="moreNewsContainer">
             <h3>{{ articles[1].title }}</h3>
             <p>{{ articles[1].content.slice(0, 200) + "..." }}</p>
             <div id="buttonDiv">
-                <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="goToFullArticle(articles[1].id)"></CsButton>
+                <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="articles[1].id != null ? goToFullArticle(articles[1].id) : null"></CsButton>
             </div>
         </div>
         <div class="moreNewsContainer">
             <h3>{{ articles[2].title }}</h3>
             <p>{{ articles[2].content.slice(0, 200) + "..." }}</p>
             <div id="buttonDiv">
-                <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="goToFullArticle(articles[2].id)"></CsButton>
+                <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="articles[1].id != null ? goToFullArticle(articles[1].id) : null"></CsButton>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@ onMounted(async () => {
     }
 })
 
-function goToFullArticle(id) {
+function goToFullArticle(id: number) {
   router.push({ name: "article", params: { id: String(id) } });
 }
 </script>
