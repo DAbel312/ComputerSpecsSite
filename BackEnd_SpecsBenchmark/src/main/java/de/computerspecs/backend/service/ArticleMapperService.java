@@ -8,6 +8,12 @@ import de.computerspecs.backend.entity.Article;;
 @Component
 public class ArticleMapperService {
     
+    /**
+     * maps article object to articleDTO
+     * @param article
+     * @return
+     */
+
     public ArticleDTO mapArticleToArticleDTO(Article article) {
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setId(article.getId());

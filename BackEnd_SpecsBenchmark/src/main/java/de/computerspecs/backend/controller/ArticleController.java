@@ -34,7 +34,7 @@ public class ArticleController {
      */
 
     @PostMapping("/create")
-    public ResponseEntity createArticle(@RequestBody ArticleCreateDTO articleDto) {
+    public ResponseEntity<?> createArticle(@RequestBody ArticleCreateDTO articleDto) {
         long nowMillis = System.currentTimeMillis();
         Date date = new Date(nowMillis);
 
