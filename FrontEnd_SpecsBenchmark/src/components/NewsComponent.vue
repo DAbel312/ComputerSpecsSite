@@ -48,7 +48,7 @@ function goToFullArticle (id: number) {
   height: fit-content;
   box-sizing: border-box;
   margin-left: 5%;
-  padding: 2% 2% 2% 2%;
+  padding: 25px 25px 25px 25px;
   box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
 
   h3 {

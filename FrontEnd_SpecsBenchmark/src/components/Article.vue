@@ -49,7 +49,7 @@ onMounted(async () => {
 
 #content {
     box-sizing: border-box;
-    padding: 2% 2% 2% 2%;
+    padding: 25px 25px 25px 25px;
     height: fit-content;
     max-width: 100%;
     overflow: auto;

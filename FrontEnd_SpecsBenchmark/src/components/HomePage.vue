@@ -176,7 +176,7 @@ onMounted(async () => {
   }
 }
 
-@media (max-width: 1430px) {
+@media (max-width: 1439px) {
   #mainArea {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);

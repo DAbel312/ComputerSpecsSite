@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import {onMounted} from "vue";
 import axios from "axios";
 import NewsComponent from "./NewsComponent.vue"
@@ -37,16 +37,31 @@ onMounted(async () => {
 
   numPages.value = numberPages;
 
-  switchPage(1);
+  nextTick(() => {
+    switchPage(1);
+  })
 })
 
 /**
  * switches pages, shows 5 articles
  * calculates, which articles to show on which page
+ * changes color of page span, which is selected at the moment
  * @param page
  */
 
 async function switchPage(page: number) {
+  const spans = Array.from(document.querySelectorAll<HTMLSpanElement>('span'));
+
+  spans.forEach(span => {
+    span.style.color = 'black';
+  })
+
+  const spansWithOne = spans.filter(span =>
+    span.textContent?.trim() === page.toString()
+  );
+
+  spansWithOne[0].style.color = '#2cc010';
+
   const secondSliceNumber = page * 5;
   const firstSliceNumber = secondSliceNumber - 5;
 
@@ -56,6 +71,7 @@ async function switchPage(page: number) {
     top: 0,
     behavior: "smooth"
   });
+  
 }
 </script>
 
@@ -70,6 +86,10 @@ async function switchPage(page: number) {
   h1 {
     text-align: center;
     color: var(--primaryBackgroundColor1);
+  }
+
+  #allNewsDiv {
+    min-height: 1200px;
   }
 
   #pages {
@@ -118,6 +138,6 @@ async function switchPage(page: number) {
   #pages span:hover {
     cursor: pointer;
     font-weight: bold;
-    color: var(--primaryGreen1);
+    color: var(--primaryGreen1) !important;
   }
 </style>
