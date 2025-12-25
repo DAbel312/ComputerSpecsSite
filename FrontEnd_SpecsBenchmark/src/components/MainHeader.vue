@@ -1,7 +1,3 @@
-<script setup>
-import router from "../router/index.js";
-</script>
-
 <template>
   <header id="responsive-header">
     <nav class="navbar">
@@ -41,10 +37,8 @@ import router from "../router/index.js";
   </header>
 </template>
 
-<script>
-export default {
-  name: 'header'
-}
+<script setup>
+  
 </script>
 
 <style lang="scss">
@@ -60,6 +54,8 @@ export default {
 #responsive-header {
   background: var(--primaryColor1);
   box-shadow: 0 4px 8px var(--primaryGreen1);
+  position: relative;
+  z-index: 20;
 }
 
 #responsive-header nav {

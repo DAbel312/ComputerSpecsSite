@@ -10,7 +10,7 @@ public class Article {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private String title;
 
@@ -21,13 +21,17 @@ public class Article {
 
     private String author;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = true) 
+    @JoinColumn(name = "image_id")
+    private ImageData image;   
+
     public Article() {}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -61,5 +65,13 @@ public class Article {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public ImageData getImageData() {
+        return image;
+    }
+
+    public void setImageData(ImageData imageData) {
+        this.image = imageData;
     }
 }

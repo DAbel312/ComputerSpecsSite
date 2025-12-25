@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -52,7 +53,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        if (path.equals("/api/admin/login") || path.equals("/api/article/get") || path.equals("/api/article/getAll")) {
+        AntPathMatcher matcher = new AntPathMatcher();
+
+        if (path.equals("/api/admin/login") || 
+            path.equals("/api/article/get") || 
+            path.equals("/api/article/getAll") || 
+            matcher.match("/api/article/getById/**", path) || 
+            path.equals("/api/article/getRandom") || 
+            matcher.match("/api/image/get/**", path) || 
+            matcher.match("/api/image/get/**", path)
+            ) {
             filterChain.doFilter(request, response);
             return;
         }

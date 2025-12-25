@@ -41,8 +41,16 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/admin/login", "/api/article/get", "/api/article/getAll").permitAll()
-                        .requestMatchers("/admin/**", "/api/article/create").authenticated()
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/api/admin/login",
+                            "/api/article/get",
+                            "/api/article/getAll",
+                            "/api/article/getById/**",
+                            "/api/article/getRandom",
+                            "/api/image/get/**",
+                            "/api/image/get/**")
+                            .permitAll()
+                        .requestMatchers("/admin/**", "/api/article/create", "/api/image/post", "/api/image/getInfo/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

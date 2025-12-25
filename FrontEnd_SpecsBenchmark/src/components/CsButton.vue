@@ -1,5 +1,8 @@
 <template>
-  <button :style="{ width: props.width }">
+  <button :style="{ 
+  width: props.width, 
+  padding: `${props.paddingTopBottom}px 20px` 
+}">
     <span>{{ props.content }}</span>
   </button>
 </template>
@@ -8,10 +11,12 @@
 
 const props = withDefaults(defineProps<{
   content: string,
-  width?: string
+  width?: string,
+  paddingTopBottom?: number
 }>(),{
   content: "Button",
-  width: "170px"
+  width: "170px",
+  paddingTopBottom: 10
 })
 </script>
 
@@ -21,7 +26,6 @@ const props = withDefaults(defineProps<{
 button {
   background: #fff;
   border: none;
-  padding: 10px 20px;
   display: inline-block;
   font-size: 15px;
   font-weight: 600;

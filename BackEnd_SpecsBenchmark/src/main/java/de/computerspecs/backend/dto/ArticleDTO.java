@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class ArticleDTO {
 
+    private long id;
+
     private String title;
 
     private String content;
@@ -12,7 +14,19 @@ public class ArticleDTO {
 
     private String author;
 
-    public ArticleDTO(String title, String content, Date date, String author) {
+    private Long imageId;
+
+    public ArticleDTO(long id, String title, String content, Date date, String author, Long imageId) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.author = author;
+        this.imageId = imageId;
+    }
+
+    public ArticleDTO(long id, String title, String content, Date date, String author) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
@@ -20,6 +34,14 @@ public class ArticleDTO {
     }
 
     public ArticleDTO() {}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -51,5 +73,13 @@ public class ArticleDTO {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
     }
 }

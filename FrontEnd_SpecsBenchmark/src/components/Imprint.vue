@@ -1,12 +1,12 @@
-<script setup>
-import CsButton from './CsButton.vue';
-</script>
-
 <template>
   <div id="mainImprint">
-    <csButton @click="" content="Admin Login" class="ImprintAdminButton"/>
+    <div>Moin</div>
   </div>
 </template>
+
+<script setup>
+
+</script>
 
 <script>
 

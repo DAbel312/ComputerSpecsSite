@@ -1,4 +1,3 @@
-
 <template>
   <form class="form" :style="{ width: props.width }">
     <input class="input" :placeholder="props.placeholder" :type="props.type" v-model="model" :maxlength="props.maxLength">

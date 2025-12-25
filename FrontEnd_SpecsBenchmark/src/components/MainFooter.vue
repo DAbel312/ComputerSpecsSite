@@ -1,17 +1,17 @@
-<script setup>
-
-</script>
-
 <template>
   <footer>
     <div id="footerLinks">
-      <a href="#" class="footerLink">Impressum</a>
+      <a href="/#/impressum" class="footerLink">Impressum</a>
       <a href="#" class="footerLink">Kontakt</a>
       <a href="#" class="footerLink">Über diese Seite</a>
     </div>
     <!-- <img src="../assets/Bilder/LogoPage.webp" alt="PC Logo" id="pclogo"> -->
   </footer>
 </template>
+
+<script setup>
+
+</script>
 
 <style lang="scss">
 footer {

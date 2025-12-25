@@ -1,74 +1,61 @@
-<script setup>
+<template>
+  <div id="mainDiv">
+    <h1>Neuigkeiten</h1>
+    <div id="allNewsDiv">
+      <NewsComponent v-for="n in articlesShown" :key="n.id" :title="n.title" :content="n.content" :author="n.author" :date="n.date" :id="n.id"/>
+    </div>
+    <p id="pages">
+      <span v-for="i in numPages" @click="switchPage(i)">
+        {{ i }}
+      </span>
+    </p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
 import {onMounted} from "vue";
 import axios from "axios";
+import NewsComponent from "./NewsComponent.vue"
+import { Article } from "../domain/Article"
+
+const articles = ref<Article[]>([]);
+const numPages = ref<number>(0);
+const articlesShown = ref<Article[]>([]);
+
+/**
+ * gets all articles when page is mounted
+ * calculates number of pages
+ */
 
 onMounted(async () => {
   const response = await axios.get('http://localhost:5174/api/article/getAll');
 
-  const allNewsDiv = document.getElementById('allNewsDiv');
-
-  const pages = document.getElementById('pages');
-
-  for (let i = 0; i < response.data.length; i++) {
-    const newsDiv = document.createElement('div');
-    allNewsDiv.appendChild(newsDiv);
-
-    const newsDivTitle = document.createElement('H3');
-    const newsDivContent = document.createElement('div');
-    const newsDivDate = document.createElement('p');
-    const newsDivAuthor = document.createElement('p');
-
-    newsDivTitle.textContent = response.data[i].title;
-    newsDivContent.textContent = response.data[i].content;
-    newsDivDate.textContent = ("Datum: " + response.data[i].date).slice(0, 17);
-    newsDivAuthor.textContent = "Autor: " + response.data[i].author;
-
-    newsDiv.appendChild(newsDivTitle);
-    newsDiv.appendChild(newsDivContent);
-    newsDiv.appendChild(newsDivDate);
-    newsDiv.appendChild(newsDivAuthor);
-
-    newsDiv.className = "newsDiv";
-    newsDivTitle.className = "newsDivTitle";
-    newsDivContent.className = "newsDivContent";
-    newsDivDate.className = "newsDivDate"
-    newsDivAuthor.className = "newsDivAuthor";
-  }
+  articles.value = response.data;
 
   const numberPages = Math.ceil(response.data.length / 5);
 
-  for (let j = 1; j <= numberPages; j++) {
-    const pageSpan = document.createElement('span');
+  numPages.value = numberPages;
 
-    pages.appendChild(pageSpan);
-    pageSpan.innerHTML = j;
-
-    pageSpan.onclick = function () {
-      console.log(j);
-    }
-  }
-
+  switchPage(1);
 })
-</script>
 
-<template>
-  <div id="mainDiv">
-    <h1>Neuigkeiten</h1>
-    <div id="allNewsDiv"></div>
-    <p id="pages"></p>
-  </div>
-</template>
+/**
+ * switches pages, shows 5 articles
+ * calculates, which articles to show on which page
+ * @param page
+ */
 
-<script>
-export default {
-  data() {
-    return {
+async function switchPage(page: number) {
+  const secondSliceNumber = page * 5;
+  const firstSliceNumber = secondSliceNumber - 5;
 
-    };
-  },
-  methods: {
-
-  }
+  articlesShown.value = articles.value.slice(firstSliceNumber, secondSliceNumber);
+  
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 </script>
 
@@ -76,11 +63,13 @@ export default {
   #mainDiv {
     padding: 1% 1% 1% 1%;
     box-sizing: border-box;
+    min-height: 530px;
     background-color: var(--primaryDarkerBackgroundColor1);
   }
 
   h1 {
     text-align: center;
+    color: var(--primaryBackgroundColor1);
   }
 
   #pages {

@@ -1,9 +1,3 @@
-<script setup>
-
-import CsButton from "./CsButton.vue";
-import CsInput from "./CsInput.vue";
-</script>
-
 <template>
     <div id="adminLogInDiv">
       <h4>Administrator Log In</h4>
@@ -14,8 +8,10 @@ import CsInput from "./CsInput.vue";
     </div>
 </template>
 
-<script>
-
+<script setup>
+import { ref } from "vue";
+import CsButton from "./CsButton.vue";
+import CsInput from "./CsInput.vue";
 import axios from "axios";
 import router from "../router/index.js";
 
@@ -24,33 +20,27 @@ import router from "../router/index.js";
  * sets jwt if request is success
  */
 
-export default {
-  data() {
-    return {
-      username: '',
-      password: '',
-      message: ''
-    };
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await axios.post('http://localhost:5174/api/admin/login', {
-          username: this.username,
-          password: this.password
-        });
+const username = ref("");
+const password = ref("");
+const message = ref("");
 
-        localStorage.setItem('jwt', response.data.token);
-
-        router.push("/admin");
-      } catch (error) {
-        this.message = "Login fehlgeschlagen"
-        console.error(error);
+const login = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5174/api/admin/login",
+      {
+        username: username.value,
+        password: password.value
       }
-    }
-  }
-}
+    );
 
+    localStorage.setItem("jwt", response.data.token);
+    router.push("/admin");
+  } catch (error) {
+    message.value = "Login fehlgeschlagen";
+    console.error(error);
+  }
+};
 </script>
 
 <style scoped lang="scss">
