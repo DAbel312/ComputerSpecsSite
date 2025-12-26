@@ -131,6 +131,8 @@
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-items: end;
+  margin-right: 50px;
   gap: 20px;
 }
 
@@ -155,7 +157,7 @@
   display: none;
 }
 
-@media (max-width: 970px) {
+@media (max-width: 1000px) {
   #responsive-header .navdiv {
     display: grid;
     grid-template-columns: 1fr auto;
