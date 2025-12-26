@@ -7,11 +7,33 @@
           Tech Bench
         </a>
         <ul>
-          <li><a href="#" class="active">GPU</a></li>
-          <li><a href="#">CPU</a></li>
-          <li><a href="#">SSD</a></li>
-          <li><a href="#">Kontakt</a></li>
-          <li><a href="/#/impressum">Impressum</a></li>
+          <li>
+            <button class="button">
+              GPU
+            </button>
+          </li>
+          <li>
+            <button class="button">
+              CPU
+            </button>
+          </li>
+          <li>
+            <button class="button">
+              SSD
+            </button>
+          </li>
+          <li>
+            <button class="button">
+              Kontakt
+            </button>
+          </li>
+          <li>
+            <button class="button">
+              <router-link to="/impressum" class="routerLink">
+                Impressum
+              </router-link>
+            </button>
+          </li>
         </ul>
         <div id="burgerMenu">
           <label for="toggleNav">
@@ -38,7 +60,7 @@
 </template>
 
 <script setup>
-  
+
 </script>
 
 <style lang="scss">
@@ -52,14 +74,13 @@
 }
 
 #responsive-header {
-  background: var(--primaryColor1);
-  box-shadow: 0 4px 8px var(--primaryGreen1);
   position: relative;
   z-index: 20;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 #responsive-header nav {
-  background: var(--primaryColor1);
+  background: white;
 }
 
 #responsive-header .navbar {
@@ -69,12 +90,25 @@
   padding-bottom: 30px;
 }
 
-#responsive-header .navbar a:hover {
-  color: var(--primaryGreen1);;
+.button {
+  padding: 15px 20px !important;
+  border: none;
+  outline: none;
+  background-color: #151515;
+  color: #eee;
+  border-radius: 7px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease-out;
+  width: 110px;
 }
 
-#responsive-header .navbar a:active {
-  color: var(--primaryGreen1);;
+.button:hover {
+  transform: translateY(-3px);
+}
+
+.routerLink {
+  color: white;
 }
 
 #responsive-header .navdiv {
@@ -86,21 +120,17 @@
 #responsive-header .name {
   font-size: 35px;
   font-weight: 600;
-  color: white;
+  color: black;
   margin-bottom: 10px;
   margin-left: 50px;
   animation: slide-in 1s ease-out;
   cursor: default;
 }
 
-#titleHeader:hover, #titleHeader:active {
-  color: white !important;
-}
-
 #responsive-header ul {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
 }
 
@@ -111,35 +141,6 @@
   align-self: center;
 }
 
-#responsive-header li a {
-  color: white;
-  font-size: 20px;
-  margin-right: 20px;
-  transition: color 0.3s;
-}
-
-#responsive-header button {
-  background-color: #37445d;
-  margin-left: 10px;
-  border-radius: 5px;
-  padding: 10px 20px;
-  width: 100px;
-  height: 35px;
-  border: none;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.1s;
-  align-self: center;
-  margin-bottom: 10px;
-}
-
-#responsive-header button:hover {
-  background-color: #abadb0;
-  transform: scale(1.05);
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive Design für Header */
 #responsive-header #burgerMenu {
   display: none;
 }

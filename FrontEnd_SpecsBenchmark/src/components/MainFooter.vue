@@ -1,11 +1,11 @@
 <template>
   <footer>
+    <!-- <img src="../assets/Bilder/TechBenchLogo.webp" alt="TechBenchLogo" id="pclogo"> -->
     <div id="footerLinks">
       <a href="/#/impressum" class="footerLink">Impressum</a>
       <a href="#" class="footerLink">Kontakt</a>
       <a href="#" class="footerLink">Über diese Seite</a>
     </div>
-    <!-- <img src="../assets/Bilder/LogoPage.webp" alt="PC Logo" id="pclogo"> -->
   </footer>
 </template>
 
@@ -18,7 +18,7 @@ footer {
   width: 100%;
   height: 170px;
   background-color: var(--primaryColor1);
-  box-shadow: 0 0 10px var(--primaryGreen1);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 #footerLinks {

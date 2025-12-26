@@ -53,14 +53,14 @@ async function switchPage(page: number) {
   const spans = Array.from(document.querySelectorAll<HTMLSpanElement>('span'));
 
   spans.forEach(span => {
-    span.style.color = 'black';
+    span.style.fontWeight = 'normal';
   })
 
   const spansWithOne = spans.filter(span =>
     span.textContent?.trim() === page.toString()
   );
 
-  spansWithOne[0].style.color = '#2cc010';
+  spansWithOne[0].style.fontWeight = 'bold';
 
   const secondSliceNumber = page * 5;
   const firstSliceNumber = secondSliceNumber - 5;
@@ -137,7 +137,6 @@ async function switchPage(page: number) {
 
   #pages span:hover {
     cursor: pointer;
-    font-weight: bold;
-    color: var(--primaryGreen1) !important;
+    font-weight: bold !important;
   }
 </style>

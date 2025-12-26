@@ -76,7 +76,7 @@ onMounted(async () => {
   width: 350px;
   height: 470px;
   border-radius: 13px;
-  box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin-top: 20%;
   margin-bottom: 20%;
   box-sizing: border-box;
@@ -95,10 +95,11 @@ onMounted(async () => {
     border-top-right-radius: 12px;
 
     img {
-      width: 100%;
+      width: 99.8%;
       height: 155%;
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
+      padding-left: 0.1%;
     }
   }
 
@@ -225,7 +226,7 @@ onMounted(async () => {
   box-sizing: border-box;
   margin-left: 3%;
   padding: 2% 2% 2% 2%;
-  box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   h3 {
     color: var(--textGreen);
@@ -255,7 +256,7 @@ onMounted(async () => {
   padding: 2% 2% 2% 2%;
   margin-left: 17%;
   margin-right: 3%;
-  box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin-top: 60px;
 
   h3 {

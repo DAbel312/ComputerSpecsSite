@@ -7,7 +7,7 @@
         <div id="buttonDiv">
             <CsButton content="Weiter..." :paddingTopBottom="5" width="130px" id="continueButton" @click="props.id != null ? goToFullArticle(props.id) : null"></CsButton>
         </div>
-        <p>{{ date.slice(0, 10) }}</p>
+        <p>{{ date.slice(0, 10).split('-').reverse().join('.') }}</p>
         <p>{{ author }}</p>
     </div>
 </template>
@@ -49,10 +49,11 @@ function goToFullArticle (id: number) {
   box-sizing: border-box;
   margin-left: 5%;
   padding: 25px 25px 25px 25px;
-  box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
 
   h3 {
-    color: var(--textGreen);
+    color: black;
     word-break: break-word;
     font-size: 1.7rem;
     text-align: center;

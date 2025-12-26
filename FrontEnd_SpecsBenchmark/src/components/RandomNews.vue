@@ -84,7 +84,7 @@ h2 {
     padding: 3% 3% 3% 3%;
     background-color: var(--primaryBackgroundColor1);
     border-radius: 12px;
-    box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px 6px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
     p, h3 {
         background-color: var(--primaryBackgroundColor1);

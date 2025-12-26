@@ -31,16 +31,17 @@
 #mainImprint {
   width: 100%;
   height: 1300px;
-  padding: 25px 25px 25px 25px;
+  padding: 70px 70px 70px 70px;
   box-sizing: border-box;
   line-height: 150%;
+  background-color: var(--primaryBackgroundColor1);
 
   #firstH2 {
     margin-top: 15px;
   }
 
   h1, h2, h3 {
-    color: var(--textGreen);
+    color: black;
   }
 
   pre {

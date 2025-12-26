@@ -47,7 +47,7 @@ button::before {
   bottom: 0;
   right: 100%;
   left: 0;
-  background: var(--primaryGreen1);
+  background: black;
   opacity: 0;
   z-index: -1;
   transition: all 0.5s;

@@ -2,7 +2,7 @@
     <div id="content">
         <h1 id="title">{{ data?.title }}</h1>
         <p id="author">Ein Artikel von {{  data?.author }}</p>
-        <p id="date">Datum: {{ data?.date.slice(0, 10) }}</p>
+        <p id="date">Datum: {{ data?.date.slice(0, 10).split('-').reverse().join('.') }}</p>
         <img :src="`http://localhost:5174/api/image/get/${imageId}`" alt="Artikel Bild" id="picture">
         <pre id="text">{{ data?.content }}</pre>
     </div>
@@ -49,14 +49,14 @@ onMounted(async () => {
 
 #content {
     box-sizing: border-box;
-    padding: 25px 25px 25px 25px;
+    padding: 70px 70px 70px 70px;
     height: fit-content;
     max-width: 100%;
     overflow: auto;
 }
 
 #title {
-    color: var(--textGreen);
+    color: black;
     word-wrap: break-word;
 }
 
@@ -75,6 +75,12 @@ onMounted(async () => {
 img {
     width: 50%;
     float: right;
+}
+
+@media (max-width: 1280px) {
+    img {
+        width: 100%;
+    }
 }
 
 @media (max-width: 400px) {
