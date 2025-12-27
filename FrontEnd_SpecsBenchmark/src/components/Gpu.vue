@@ -4,12 +4,14 @@
         <div id="searchComponents">
             <SearchComponent v-bind:nameList="gpuNames" id="searchComponent1" v-model="gpu1" @select="getGpuByName(gpu1)"></SearchComponent>
             <span class="vs">vs.</span>
-            <SearchComponent v-bind:nameList="gpuNames" id="searchComponent2" v-model="gpu2"></SearchComponent>
+            <SearchComponent v-bind:nameList="gpuNames" id="searchComponent2" v-model="gpu2" @select="getGpuByName(gpu2)"></SearchComponent>
             <span class="vs">vs.</span>
-            <SearchComponent v-bind:nameList="gpuNames" id="searchComponent3" v-model="gpu3"></SearchComponent>
+            <SearchComponent v-bind:nameList="gpuNames" id="searchComponent3" v-model="gpu3" @select="getGpuByName(gpu3)"></SearchComponent>
         </div>
         <div id="tables">
             <SpecsComponent v-bind:compareObject="objects[0]"></SpecsComponent>
+            <SpecsComponent v-bind:compareObject="objects[1]"></SpecsComponent>
+            <SpecsComponent v-bind:compareObject="objects[2]"></SpecsComponent>
         </div>
     </div>
 </template>
