@@ -61,7 +61,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             matcher.match("/api/article/getById/**", path) || 
             path.equals("/api/article/getRandom") || 
             matcher.match("/api/image/get/**", path) || 
-            matcher.match("/api/image/get/**", path)
+            matcher.match("/api/image/get/**", path) ||
+            matcher.match("/api/gpu/**", path)
             ) {
             filterChain.doFilter(request, response);
             return;

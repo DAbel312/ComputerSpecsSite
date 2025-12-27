@@ -8,7 +8,7 @@
         </a>
         <ul>
           <li>
-            <button class="button">
+            <button class="button" @click="router.push('gpu')">
               GPU
             </button>
           </li>
@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-
+import router from "../router/index.js";
 </script>
 
 <style lang="scss">
@@ -173,7 +173,7 @@
   #responsive-header #burgerMenu .white {
     width: 40px;
     height: 5px;
-    background-color: white;
+    background-color: black;
     display: block;
     cursor: pointer;
   }
@@ -196,7 +196,7 @@
 
   #responsive-header #burgerMenu:hover, #responsive-header #burgerMenu:active {
     .white {
-      background-color: var(--primaryGreen1);
+      background-color: black;
       transition: background-color 0.3s;
     }
   }

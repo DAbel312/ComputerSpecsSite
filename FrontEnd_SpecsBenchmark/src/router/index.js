@@ -6,6 +6,7 @@ import AdminLogInPage from "../components/AdminLogInPage.vue";
 import MoreNewsPage from "../components/MoreNewsPage.vue";
 import Article from "../components/Article.vue";
 import NotFound from '../components/NotFound.vue';
+import Gpu from '../components/Gpu.vue';
 
 /**
  * all routes in front-end
@@ -49,7 +50,13 @@ const routes = [
         path: "/notFound",
         name: "notFound",
         component: NotFound
+    },
+    {
+        path: "/gpu",
+        name: "gpu",
+        component: Gpu 
     }
+    
 ]
 
 const router = createRouter({

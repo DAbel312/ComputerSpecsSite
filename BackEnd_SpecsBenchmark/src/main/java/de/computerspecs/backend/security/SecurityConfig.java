@@ -48,7 +48,8 @@ public class SecurityConfig {
                             "/api/article/getById/**",
                             "/api/article/getRandom",
                             "/api/image/get/**",
-                            "/api/image/get/**")
+                            "/api/image/get/**",
+                            "/api/gpu/**")
                             .permitAll()
                         .requestMatchers("/admin/**", "/api/article/create", "/api/image/post", "/api/image/getInfo/**").authenticated()
                         .anyRequest().authenticated()

@@ -48,7 +48,7 @@ const login = async () => {
   #adminLogInDiv {
     height: 330px;
     width: 45%;
-    box-shadow: var(--primaryGreen1) 0px 10px 20px, var(--primaryGreen1) 0px 6px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     justify-self: center;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;

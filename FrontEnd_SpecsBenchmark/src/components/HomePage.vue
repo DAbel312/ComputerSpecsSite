@@ -6,7 +6,7 @@
       </div>
       <div id="gpuMain2">
         <span>Hier kannst Du die Spezifikationen von GPUs verleichen, wie z.B. die Shader-Einheiten, Tensor Cores oder ROPs. Darunter fallen sowohl GPUs von Intel, AMD sowie Nvidia.</span>
-        <csButton @click="router.go(-1)" content="GPU" class="mainAreaButton"/>
+        <csButton @click="router.push('gpu')" content="GPU" class="mainAreaButton"/>
       </div>
     </div>
     <div id="cpuMain" class="mainAreaHome">

@@ -1,6 +1,6 @@
 <template>
   <form class="form" :style="{ width: props.width }">
-    <input class="input" :placeholder="props.placeholder" :type="props.type" v-model="model" :maxlength="props.maxLength">
+    <input class="input" :placeholder="props.placeholder" :type="props.type" v-model="model" :value="modelValue" :maxlength="props.maxLength" @input="onInput" v-bind="$attrs">
     <button class="reset" type="reset">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
@@ -15,14 +15,26 @@ const model = defineModel<string>();
 const props = withDefaults(defineProps<{
   placeholder: string,
   width?: string,
-  type: string,
-  maxLength: string
+  type?: string,
+  maxLength: string,
+  modelValue: string
 }>(),{
   placeholder: "Input Placeholder",
   width: "250px",
   type: "text",
   maxLength: "30"
 });
+
+const emit = defineEmits<{
+  (e: "update:modelValue", v: string): void
+  (e: "input", ev: Event): void
+}>();
+
+function onInput(ev: Event) {
+  const v = (ev.target as HTMLInputElement).value;
+  emit("update:modelValue", v);
+  emit("input", ev);
+}
 </script>
 
 <style scoped lang="scss">
@@ -40,7 +52,7 @@ const props = withDefaults(defineProps<{
   --height-of-input: 40px;
   --border-height: 2px;
   --input-bg: #fff;
-  --border-color: var(--greenHover);
+  --border-color: black;
   --border-radius: 30px;
   --after-border-radius: 1px;
   position: relative;
@@ -51,6 +63,7 @@ const props = withDefaults(defineProps<{
   border-radius: var(--border-radius);
   transition: border-radius 0.5s ease;
   background: var(--input-bg,#fff);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 /* styling of Input */
 .input {
@@ -59,7 +72,6 @@ const props = withDefaults(defineProps<{
   width: 100%;
   height: 100%;
   padding-inline: 0.5em;
-  padding-block: 0.7em;
   border: none;
 }
 /* styling of animated border */

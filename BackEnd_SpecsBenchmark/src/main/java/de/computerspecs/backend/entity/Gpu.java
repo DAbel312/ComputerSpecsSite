@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Gpu {
 
   @Id
-  private String slug;            // aus tpu_url oder name abgeleitet
+  private String slug;           
 
   @Column(nullable = false)
   private String name;
@@ -35,7 +35,7 @@ public class Gpu {
   private Double memoryClockMhz;
 
   private Double memorySizeGb;
-  private Integer memorySizeMb;              // derived (GB*1024)
+  private Integer memorySizeMb;           
   private Integer memoryBusBits;
   private Double memoryBandwidthGbs;
   private String memoryType;
