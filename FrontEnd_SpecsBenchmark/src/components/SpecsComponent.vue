@@ -1,6 +1,6 @@
 <template>
-    <div id="main">
-        <table class="gpu-specs" v-if="props.compareObject?.type === 'gpu'">
+    <div id="mainSpecsComponents">
+        <table class="gpu-specs" v-if="props.compareObject?.type === 'gpu'" id="gpuTable">
             <thead>
                 <tr>
                 <th>Eigenschaft</th>
@@ -19,7 +19,7 @@
 
                 <tr><td>Fertigung (nm)</td><td>{{ props.compareObject?.processNm ?? "-" }}</td></tr>
                 <tr><td>Transistoren (Million)</td><td>{{ props.compareObject?.transistorCountMillion ?? "-" }}</td></tr>
-                <tr><td>Transistordichte (Mio/mm²)</td><td>{{ props.compareObject?.transistorDensityMillionPerMm2 ?? "-" }}</td></tr>
+                <tr><td>Transistordichte (Mio/mm²)</td><td>{{ Math.ceil(props.compareObject?.transistorDensityMillionPerMm2 ?? 0) ?? "-" }}</td></tr>
                 <tr><td>Die Size (mm²)</td><td>{{ props.compareObject?.dieSizeMm2 ?? "-" }}</td></tr>
                 <tr><td>Chip Package</td><td>{{ props.compareObject?.chipPackage ?? "-" }}</td></tr>
                 <tr><td>Release Date</td><td>{{ props.compareObject?.releaseDate ?? "-" }}</td></tr>
@@ -66,15 +66,7 @@
                 <tr><td>Single Float (GFLOPS)</td><td>{{ props.compareObject?.singleFloatGflops ?? "-" }}</td></tr>
                 <tr><td>Double Float (GFLOPS)</td><td>{{ props.compareObject?.doubleFloatGflops ?? "-" }}</td></tr>
 
-                <tr><td>TPU ID</td><td>{{ props.compareObject?.tpuId ?? "-" }}</td></tr>
-                <tr><td>TPU URL</td>
-                <td>
-                    <a v-if="props.compareObject?.tpuUrl" :href="props.compareObject.tpuUrl" target="_blank" rel="noopener">
-                    {{ props.compareObject.tpuUrl }}
-                    </a>
-                    <span v-else>-</span>
-                </td>
-                </tr>
+                <tr id="tpuId"><td>TPU ID</td><td>{{ props.compareObject?.tpuId ?? "-" }}</td></tr>
             </tbody>
         </table>
     </div>
@@ -89,5 +81,23 @@ const props = withDefaults(defineProps<{
 </script>
 
 <style scoped lang="scss">
+* {
+    text-align: center;
+}
 
+#gpuTable {
+    border-collapse: collapse;
+    border-radius: 13px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: white;
+    width: 90%;
+}
+
+#gpuTable tr {
+    border-bottom: 2px solid var(--primaryDarkerBackgroundColor1);
+}
+
+#tpuId {
+    border: none !important;
+}
 </style>

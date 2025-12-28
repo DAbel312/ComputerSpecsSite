@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import de.computerspecs.backend.dto.GpuDTO;
 import de.computerspecs.backend.service.GpuService;
 
+/**
+ * rest controller for interaction with gpu db
+ */
+
 @RestController
 @RequestMapping("/api/gpu")
 public class GpuController {
@@ -18,10 +22,21 @@ public class GpuController {
     @Autowired
     GpuService gpuService;
     
+    /**
+     * gets all gpu names from db
+     * @return gpu names
+     */
+
     @GetMapping("/namelist")
     public List<String> getGpuNameList() {
         return gpuService.getGpuNameList();
     }
+
+    /**
+     * gets all gpus from db by gpu name
+     * @param name
+     * @return gpu
+     */
 
     @GetMapping("/getByName")
     public GpuDTO getGpuByName(@RequestParam String name) {

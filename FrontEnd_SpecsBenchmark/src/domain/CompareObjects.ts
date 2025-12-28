@@ -1,5 +1,9 @@
 export interface Gpu  {
     type: 'gpu'
+    gamingScore: number;
+    computeScore: number;
+    computeEffiencyScore: number;
+    gamingEffiencyScore: number;
 
     name: string
     manufacturer: string

@@ -53,7 +53,7 @@ function onInput(ev: Event) {
   --border-height: 2px;
   --input-bg: #fff;
   --border-color: black;
-  --border-radius: 30px;
+  --border-radius: 13px;
   --after-border-radius: 1px;
   position: relative;
   height: var(--height-of-input);
