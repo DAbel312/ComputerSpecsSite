@@ -65,7 +65,11 @@ public interface GpuRepository extends JpaRepository<Gpu, String> {
         g.singleFloatGflops,
         g.doubleFloatGflops,
         g.tpuId,
-        g.tpuUrl
+        g.tpuUrl,
+        g.gamingScore,
+        g.computeScore,
+        g.gamingEfficiency,
+        g.computeEfficiency
     )
     FROM Gpu g
     WHERE g.name = :name

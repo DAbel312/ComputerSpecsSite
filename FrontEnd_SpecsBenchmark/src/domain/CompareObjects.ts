@@ -1,9 +1,5 @@
 export interface Gpu  {
     type: 'gpu'
-    gamingScore: number;
-    computeScore: number;
-    computeEffiencyScore: number;
-    gamingEffiencyScore: number;
 
     name: string
     manufacturer: string
@@ -69,6 +65,16 @@ export interface Gpu  {
 
     tpuId: string
     tpuUrl: string
+
+    gamingScore: number;
+    computeScore: number;
+    gamingEfficiency: number;
+    computeEfficiency: number;
+
+    gamingScoreRelation: number;
+    computeScoreRelation: number;
+    gamingEffiencyScoreRelation: number;
+    computeEfficiencyScoreRelation: number;
 }
 
 export interface Cpu  {

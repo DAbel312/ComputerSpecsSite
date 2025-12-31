@@ -73,4 +73,9 @@ public class Gpu {
 
   private String tpuId;
   private String tpuUrl;
+
+  private Integer gamingScore;
+  private Integer computeScore;
+  private Integer gamingEfficiency;
+  private Integer computeEfficiency;
 }

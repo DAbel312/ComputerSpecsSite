@@ -4,50 +4,62 @@
         <div id="gamingScore">
             {{ Math.ceil(props.valueGaming) }}
         </div>
-        <div id="gamingScoreRelation" :v-if="!(nullCountRef === 2 || nullCountRef === 3)"></div>
+        <div id="gamingScoreRelation" v-if="showScore">
+            <div id="blueBarGamingScore" :style="{ width: gamingScoreRelation + '%' }">{{ Math.floor(gamingScoreRelation) + '%' }}</div>
+        </div>
         <div>Compute-Score</div>
         <div id="computeScore">
             {{ Math.ceil(props.valueCompute) }}
         </div>
-        <div id="computeScoreRelation" :v-if="!(nullCountRef === 2 || nullCountRef === 3)"></div>
-        <div>Efficiency-Score</div>
-        <div id="computeEfficiencyScore">
-            {{ Math.ceil(props.computeEfficiencyScore) }}
+        <div id="computeScoreRelation" v-if="showScore">
+            <div id="blueBarComputeScore" :style="{ width: computeScoreRelation + '%' }">{{ Math.floor(computeScoreRelation) + '%'}}</div>
         </div>
-        <div id="efficiencyScoreRelation" :v-if="!(nullCountRef === 2 || nullCountRef === 3)"></div>
+        <div>Compute-Efficiency-Score</div>
+        <div id="computeEfficiencyScore">
+            {{ Math.ceil(props.valueComputeEfficiencyScore) }}
+        </div>
+        <div id="computeEfficiencyScoreRelation" v-if="showScore">
+            <div id="blueBarEfficiencyCompute" :style="{ width: computeEfficiencyScoreRelation + '%' }">{{ Math.floor(computeEfficiencyScoreRelation) + '%' }}</div>
+        </div>
+        <div>Gaming-Efficiency-Score</div>
+        <div id="gamingEfficiencyScore">
+            {{ Math.ceil(props.valueGamingEfficiencyScore) }}
+        </div>
+        <div id="gamingEfficiencyScoreRelation" v-if="showScore">
+            <div id="blueBarEfficiencyGaming" :style="{ width: gamingEfficiencyScoreRelation + '%' }">{{ Math.floor(gamingEfficiencyScoreRelation) + '%'}}</div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import type { Gpu, Cpu, Ssd } from "../domain/CompareObjects";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch  } from "vue";
 
 const props = withDefaults(defineProps<{
   valueGaming: number;
   valueCompute: number;
-  computeEfficiencyScore: number;
+  valueComputeEfficiencyScore: number;
+  valueGamingEfficiencyScore: number;
   objectGpu: Gpu[] | null;
+  gamingScoreRelation: number;
+  computeScoreRelation: number;
+  computeEfficiencyScoreRelation: number;
+  gamingEfficiencyScoreRelation: number;
+  showScore: boolean | undefined;
 }>(),{
     valueGaming: 0,
     valueCompute: 0,
     computeEfficiencyScore: 0,
+    gamingScore: 0,
+    computeScore: 0,
+    efficiencyScore: 0,
+    showScore: false
 })
 
-const nullCountRef = ref<number>();
+watch(() => props.objectGpu, () => {
+    console.log(props.objectGpu)
+}, { deep: true });
 
-const gamingScore = document.getElementById('gamingScoreRelation');
-const computeScore = document.getElementById('computeScoreRelation');
-const efficiencyScore = document.getElementById('efficiencyScoreRelation');
-
-onMounted(() => {
-    calculateScoreRelations(props.objectGpu);
-});
-
-function calculateScoreRelations(gpu: Gpu[] | null) {
-    const nullCount = gpu?.filter(x => x === null).length;
-
-    nullCountRef.value = nullCount;
-}
 </script>
 
 <style scoped lang="scss">
@@ -60,5 +72,25 @@ function calculateScoreRelations(gpu: Gpu[] | null) {
     width: 90%;
     border-radius: 13px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+#gamingScoreRelation, #computeScoreRelation, #computeEfficiencyScoreRelation, #gamingEfficiencyScoreRelation {
+    width: 80%;
+    border: 1px solid var(--primaryDarkerBackgroundColor1);
+    border-radius: 13px;
+    margin-left: auto;
+    margin-right: auto;
+
+    #blueBarGamingScore, #blueBarComputeScore, #blueBarEfficiencyCompute, #blueBarEfficiencyGaming {
+        border-radius: 13px;
+        width: 0%;
+        height: 20px;
+        z-index: -10;
+        background-color: rgb(106, 106, 255);
+        color: white;
+        font-weight: bold;
+    }
 }
 </style>
