@@ -1,8 +1,3 @@
-<script setup>
-import HeaderComponent from './components/MainHeader.vue';
-import footerComponent from './components/MainFooter.vue';
-</script>
-
 <template>
   <nav>
     <HeaderComponent/>
@@ -15,6 +10,11 @@ import footerComponent from './components/MainFooter.vue';
   </footer>
 </template>
 
+<script setup>
+import HeaderComponent from './components/MainHeader.vue';
+import footerComponent from './components/MainFooter.vue';
+</script>
+
 <style scoped>
 main {
   min-height: 80%;
@@ -22,6 +22,3 @@ main {
 }
 </style>
 
-<script>
-
-</script>

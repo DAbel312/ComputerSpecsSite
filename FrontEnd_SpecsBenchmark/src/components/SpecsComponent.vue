@@ -64,9 +64,7 @@
                 <tr><td>Texture Rate (GTexel/s)</td><td>{{ props.compareObject?.textureRateGtexelS ?? "-" }}</td></tr>
                 <tr><td>Half Float (GFLOPS)</td><td>{{ props.compareObject?.halfFloatGflops ?? "-" }}</td></tr>
                 <tr><td>Single Float (GFLOPS)</td><td>{{ props.compareObject?.singleFloatGflops ?? "-" }}</td></tr>
-                <tr><td>Double Float (GFLOPS)</td><td>{{ props.compareObject?.doubleFloatGflops ?? "-" }}</td></tr>
-
-                <tr id="tpuId"><td>TPU ID</td><td>{{ props.compareObject?.tpuId ?? "-" }}</td></tr>
+                <tr id="last"><td>Double Float (GFLOPS)</td><td>{{ props.compareObject?.doubleFloatGflops ?? "-" }}</td></tr>
             </tbody>
         </table>
     </div>
@@ -91,10 +89,15 @@ const props = withDefaults(defineProps<{
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     background-color: white;
     width: 90%;
+    line-height: 150%;
+
+    #last {
+        border-bottom: none;
+    }
 }
 
 #gpuTable tr {
-    border-bottom: 2px solid var(--primaryDarkerBackgroundColor1);
+    border-bottom: 1px solid var(--primaryDarkerBackgroundColor1);
 }
 
 #tpuId {

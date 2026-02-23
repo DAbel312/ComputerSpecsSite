@@ -46,6 +46,65 @@
                             class="scoreComponent3">
             </ScoreComponent>
         </div>
+        <div id="importantSpecs">
+            <ImportantSpecsComponent
+                            class="firstImportant" 
+                            firstAssignment="VRAM in GB" :firstValue="objects[0]?.memorySizeGb ?? 0"
+                            secondAssignment="Base Clock in MHz" :secondValue="objects[0]?.baseClockMhz ?? 0"
+                            thirdAssignment="Boost Clock in MHz" :thirdValue="objects[0]?.boostClockMhz ?? 0"
+                            fourthAssignment="Memory Clock in MHz" :fourthValue="objects[0]?.memoryClockMhz ?? 0"
+                            fifthAssignment="TDP in W" :fifthValue="objects[0]?.tdpW ?? 0"
+                            sixthAssignment="ROPs" :sixthValue="objects[0]?.rop ?? 0"
+                            seventhAssignment="TMUs" :seventhValue="objects[0]?.tmu ?? 0"
+                            eigthAssignment="SMs" :eigthValue="objects[0]?.sm ?? 0">
+            </ImportantSpecsComponent>
+            <ImportantSpecsComponent class="secondImportant" 
+                            firstAssignment="VRAM in GB" :firstValue="objects[1]?.memorySizeGb ?? 0"
+                            secondAssignment="Base Clock in MHz" :secondValue="objects[1]?.baseClockMhz ?? 0"
+                            thirdAssignment="Boost Clock in MHz" :thirdValue="objects[1]?.boostClockMhz ?? 0"
+                            fourthAssignment="Memory Clock in MHz" :fourthValue="objects[1]?.memoryClockMhz ?? 0"
+                            fifthAssignment="TDP in W" :fifthValue="objects[1]?.tdpW ?? 0"
+                            sixthAssignment="ROPs" :sixthValue="objects[1]?.rop ?? 0"
+                            seventhAssignment="TMUs" :seventhValue="objects[1]?.tmu ?? 0"
+                            eigthAssignment="SMs" :eigthValue="objects[1]?.sm ?? 0">
+            </ImportantSpecsComponent>
+            <ImportantSpecsComponent class="thirdImportant" 
+                            firstAssignment="VRAM in GB" :firstValue="objects[2]?.memorySizeGb ?? 0"
+                            secondAssignment="Base Clock in MHz" :secondValue="objects[2]?.baseClockMhz ?? 0"
+                            thirdAssignment="Boost Clock in MHz" :thirdValue="objects[2]?.boostClockMhz ?? 0"
+                            fourthAssignment="Memory Clock in MHz" :fourthValue="objects[2]?.memoryClockMhz ?? 0"
+                            fifthAssignment="TDP in W" :fifthValue="objects[2]?.tdpW ?? 0"
+                            sixthAssignment="ROPs" :sixthValue="objects[2]?.rop ?? 0"
+                            seventhAssignment="TMUs" :seventhValue="objects[2]?.tmu ?? 0"
+                            eigthAssignment="SMs" :eigthValue="objects[2]?.sm ?? 0">
+            </ImportantSpecsComponent>
+        </div>
+        <div id="importantInfo">
+            <ImportantInfoComponent 
+                            class="firstImportant"
+                            firstAssignment="Hersteller" :firstValue="objects[0]?.manufacturer ?? 'null'"
+                            secondAssignment="GPU-Name" :secondValue="objects[0]?.gpuName ?? 'null'"
+                            thirdAssignment="Architecture" :thirdValue="objects[0]?.architecture ?? 'null'"
+                            fourthAssignment="Generation" :fourthValue="objects[0]?.generation ?? 'null'"
+                            fifthAssignment="Fertigung in nm" :fifthValue="objects[0]?.processNm ?? 'null'">
+            </ImportantInfoComponent>
+            <ImportantInfoComponent 
+                            class="secondImportant"
+                            firstAssignment="Hersteller" :firstValue="objects[1]?.manufacturer ?? 'null'"
+                            secondAssignment="GPU-Name" :secondValue="objects[1]?.gpuName ?? 'null'"
+                            thirdAssignment="Architecture" :thirdValue="objects[1]?.architecture ?? 'null'"
+                            fourthAssignment="Generation" :fourthValue="objects[1]?.generation ?? 'null'"
+                            fifthAssignment="Fertigung in nm" :fifthValue="objects[1]?.processNm ?? 'null'">>
+            </ImportantInfoComponent>
+            <ImportantInfoComponent 
+                            class="thirdImportant"
+                            firstAssignment="Hersteller" :firstValue="objects[2]?.manufacturer ?? 'null'"
+                            secondAssignment="GPU-Name" :secondValue="objects[2]?.gpuName ?? 'null'"
+                            thirdAssignment="Architecture" :thirdValue="objects[2]?.architecture ?? 'null'"
+                            fourthAssignment="Generation" :fourthValue="objects[2]?.generation ?? 'null'"
+                            fifthAssignment="Fertigung in nm" :fifthValue="objects[2]?.processNm ?? 'null'">>
+            </ImportantInfoComponent>
+        </div>
         <div id="tables">
             <SpecsComponent v-if="objects[0]" :compareObject="objects[0]" id="table1"/>
             <SpecsComponent v-if="objects[1]" :compareObject="objects[1]" id="table2"/>
@@ -61,6 +120,8 @@ import SpecsComponent from "./SpecsComponent.vue";
 import SearchComponent from "./SearchComponent.vue";
 import type { Gpu } from "../domain/CompareObjects";
 import ScoreComponent from "./ScoreComponent.vue";
+import ImportantSpecsComponent from "./ImportantSpecsComponent.vue";
+import ImportantInfoComponent from "./ImportantInfoComponent.vue";
 
 const gpuNames = ref([]);
 const gpu1 = ref("");
@@ -108,89 +169,39 @@ watch(objects, () => {
   calculateScoreRelations(objects.value);
 }, { deep: true });
 
-// Zuerst die beiden GPU Objekte holen, dann die Scores vergleichen, dann beim höchsten Score 100 Setzen, dann ausrechnen, wie viel % langsamer die andere ist
-function calculateScoreRelations(gpu: (Gpu | null)[]) {
-    const nullCount = gpu.filter(x => x === null).length;
+/**
+ * calculates score relations between two or three gpus
+ * @param gpusInput
+ */
+function calculateScoreRelations(gpusInput: (Gpu | null)[]) {
+  const active = gpusInput.filter((g): g is Gpu => g !== null);
+  showScore.value = active.length >= 2;
+  if (!showScore.value) return;
 
-    if (nullCount === 3 || nullCount === 2) {
-        showScore.value = false;
-        return;
-    }
+  const applyRelation = <K extends keyof Gpu, R extends keyof Gpu>(
+    valueKey: K,
+    relationKey: R
+  ) => {
+    const values = active.map(g => Number(g[valueKey]) || 0);
+    const max = Math.max(...values);
 
-    showScore.value = true;
+    const factor = max > 0 ? 100 / max : 0;
 
-    if (nullCount === 1 || nullCount === 0) {
-        const nonNullIndices = objects.value
-         .map((val, index) => (val !== null ? index : null))
-         .filter((index): index is number => index !== null);
+    active.forEach(g => {
+      (g[relationKey] as number) = (Number(g[valueKey]) || 0) * factor;
+    });
+  };
 
-        if (nonNullIndices.length === 2) {
-            const first = objects.value[nonNullIndices[0]]
-            const second = objects.value[nonNullIndices[1]]
-
-            if (first && second && first.gamingScore > second.gamingScore) {
-                first.gamingScoreRelation = 100;
-                second.gamingScoreRelation = (second.gamingScore / first.gamingScore) * 100
-            } else if (first && second && first.gamingScore < second.gamingScore) {
-                second.gamingScoreRelation = 100;
-                first.gamingScoreRelation = (first.gamingScore / second.gamingScore) * 100
-            }
-
-            if (first && second && first.computeScore > second.computeScore) {
-                first.computeScoreRelation = 100;
-                second.computeScoreRelation = (second.computeScore / first.computeScore) * 100
-            } else if (first && second && first.computeScore < second.computeScore) {
-                second.computeScoreRelation = 100;
-                first.computeScoreRelation = (first.computeScore / second.computeScore) * 100
-            }
-
-            if (first && second && first.computeEfficiency > second.computeEfficiency) {
-                first.computeEfficiencyScoreRelation = 100;
-                second.computeEfficiencyScoreRelation = (second.computeEfficiency / first.computeEfficiency) * 100
-            } else if (first && second && first.computeEfficiency < second.computeEfficiency) {
-                second.computeEfficiencyScoreRelation = 100;
-                first.computeEfficiencyScoreRelation = (first.computeEfficiency / second.computeEfficiency) * 100
-            }
-
-             if (first && second && first.gamingEfficiency > second.gamingEfficiency) {
-                first.gamingEffiencyScoreRelation = 100;
-                second.gamingEffiencyScoreRelation = (second.gamingEfficiency / first.gamingEfficiency) * 100
-            } else if (first && second && first.gamingEfficiency < second.gamingEfficiency) {
-                second.gamingEffiencyScoreRelation = 100;
-                first.gamingEffiencyScoreRelation = (first.gamingEfficiency / second.gamingEfficiency) * 100
-            }
-            return;
-        }
-        if (nonNullIndices.length === 3) {
-            const gpus = nonNullIndices
-                .map(i => objects.value[i])
-                .filter((g): g is Gpu => g !== null);
-
-            const applyRelation = <
-                K extends keyof Gpu,
-                R extends keyof Gpu
-            >(valueKey: K, relationKey: R) => {
-                const max = Math.max(...gpus.map(g => Number(g[valueKey])));
-
-                gpus.forEach(g => {
-                    (g[relationKey] as number) = (Number(g[valueKey]) / max) * 100;
-                });
-            };
-
-            applyRelation("gamingScore", "gamingScoreRelation");
-            applyRelation("computeScore", "computeScoreRelation");
-            applyRelation("computeEfficiency", "computeEfficiencyScoreRelation");
-            applyRelation("gamingEfficiency", "gamingEffiencyScoreRelation");
-
-            return;
-        }
-    }
+  applyRelation("gamingScore", "gamingScoreRelation");
+  applyRelation("computeScore", "computeScoreRelation");
+  applyRelation("computeEfficiency", "computeEfficiencyScoreRelation");
+  applyRelation("gamingEfficiency", "gamingEffiencyScoreRelation");
 }
 </script>
 
 <style lang="scss" scoped>
 #main {
-min-height: 1400px;
+    min-height: 1400px;
     box-sizing: border-box;
     padding: 70px 70px 70px 70px;
     background-color: var(--primaryBackgroundColor1);
@@ -238,6 +249,21 @@ min-height: 1400px;
     }
 
     .scoreComponent3 {
+        justify-self: end;
+    }
+}
+
+#importantSpecs, #importantInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 40px;
+
+    .secondImportant {
+        justify-self: center;
+    }
+
+    .thirdImportant {
         justify-self: end;
     }
 }
