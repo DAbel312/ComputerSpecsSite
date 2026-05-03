@@ -57,7 +57,6 @@ const props = withDefaults(defineProps<{
 })
 
 watch(() => props.objectGpu, () => {
-    console.log(props.objectGpu)
 }, { deep: true });
 </script>
 

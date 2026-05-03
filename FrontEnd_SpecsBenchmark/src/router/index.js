@@ -7,6 +7,7 @@ import MoreNewsPage from "../components/MoreNewsPage.vue";
 import Article from "../components/Article.vue";
 import NotFound from '../components/NotFound.vue';
 import Gpu from '../components/Gpu.vue';
+import AllGpus from '../components/AllGpus.vue';
 
 /**
  * all routes in front-end
@@ -55,6 +56,11 @@ const routes = [
         path: "/gpu",
         name: "gpu",
         component: Gpu 
+    },
+    {
+        path: "/allGpus",
+        name: "allGpus",
+        component: AllGpus
     }
     
 ]

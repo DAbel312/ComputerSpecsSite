@@ -5,8 +5,9 @@
         <img src="../assets/Bilder/LogoGrafic.webp" alt="GPU">
       </div>
       <div id="gpuMain2">
-        <span>Hier kannst Du die Spezifikationen von GPUs verleichen, wie z.B. die Shader-Einheiten, Tensor Cores oder ROPs. Darunter fallen sowohl GPUs von Intel, AMD sowie Nvidia.</span>
-        <csButton @click="router.push('gpu')" content="GPU" class="mainAreaButton"/>
+        <span>Hier kannst Du die Spezifikationen von GPUs verleichen, wie z. B. die Shader-Einheiten, Tensor Cores oder ROPs. Darunter fallen sowohl GPUs von Intel, AMD sowie Nvidia.</span>
+        <csButton @click="router.push('allGpus')" content="Alle GPUs" class="mainAreaButton"/>
+        <csButton @click="router.push('gpu')" content="GPU-Vergleich" class="mainAreaButton"/>
       </div>
     </div>
     <div id="cpuMain" class="mainAreaHome">
@@ -14,8 +15,9 @@
         <img src="../assets/Bilder/LogoCPU.webp" alt="CPU">
       </div>
       <div id="cpuMain2">
-        <span>Hier kannst Du CPUs von AMD und Intel vergleichen. Hier siehst Du dann z.B. die unterschiedlichen Kerne, Taktraten oder Cache.</span>
-        <csButton @click="router.go(-1)" content="CPU" class="mainAreaButton"/>
+        <span>Hier kannst Du CPUs von AMD und Intel vergleichen. Hier siehst Du dann z. B. die unterschiedlichen Kerne, Taktraten oder Cache.</span>
+        <csButton @click="router.push('allGpus')" content="Alle CPUs" class="mainAreaButton"/>
+        <csButton @click="router.go(-1)" content="CPU-Vergleich" class="mainAreaButton"/>
       </div>
     </div>
     <div id="ssdMain" class="mainAreaHome">
@@ -23,8 +25,9 @@
         <img src="../assets/Bilder/LogoSSD.webp" alt="CPU">
       </div>
       <div id="ssdMain2">
-        <span>Hier kannst Du unterschiedliche SSDs vergleichen bis zur 5. Generation. Hier siehst Du dann Lese- und Schreibgeschwindigkeiten sowie die Geschwindigkeiten von Random Operationen.</span>
-        <csButton @click="router.go(-1)" content="SSD" class="mainAreaButton"/>
+        <span>Hier kannst Du unterschiedliche SSDs vergleichen. Hier siehst Du dann z. B. Lese- und Schreibgeschwindigkeiten sowie die Geschwindigkeiten von Random Operationen.</span>
+        <csButton @click="router.push('allGpus')" content="Alle SSDs" class="mainAreaButton"/>
+        <csButton @click="router.go(-1)" content="SSD-Vergleich" class="mainAreaButton"/>
       </div>
     </div>
   </div>
@@ -132,7 +135,7 @@ onMounted(async () => {
   span {
     margin: 10px 10px 10px 10px;
     display: block;
-    height: 67%;
+    height: 45%;
     word-wrap: break-word;
     line-height: 30px;
     text-align: center;

@@ -8,7 +8,10 @@
             <span class="vs">vs.</span>
             <SearchComponent v-bind:nameList="gpuNames" id="searchComponent3" v-model="gpu3" @select="getGpuByName(gpu3, 2)"></SearchComponent>
         </div>
-        <div id="scoreComponent">
+        <div id="emptyTables" v-if="!objects[0] && !objects[1] && !objects[2]">
+            <h2>Keine GPUs ausgewählt</h2>
+        </div>
+        <div id="scoreComponent" v-if="objects[0]">
             <ScoreComponent :valueGaming="objects[0]?.gamingScore ?? 0" 
                             :valueCompute="objects[0]?.computeScore ?? 0" 
                             :valueComputeEfficiencyScore="objects[0]?.computeEfficiency ?? 0"
@@ -46,7 +49,7 @@
                             class="scoreComponent3">
             </ScoreComponent>
         </div>
-        <div id="importantSpecs">
+        <div id="importantSpecs" v-if="objects[1]">
             <ImportantSpecsComponent
                             class="firstImportant" 
                             firstAssignment="VRAM in GB" :firstValue="objects[0]?.memorySizeGb ?? 0"
@@ -79,7 +82,7 @@
                             eigthAssignment="SMs" :eigthValue="objects[2]?.sm ?? 0">
             </ImportantSpecsComponent>
         </div>
-        <div id="importantInfo">
+        <div id="importantInfo" v-if="objects[2]">
             <ImportantInfoComponent 
                             class="firstImportant"
                             firstAssignment="Hersteller" :firstValue="objects[0]?.manufacturer ?? 'null'"
@@ -114,7 +117,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, nextTick } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import SpecsComponent from "./SpecsComponent.vue";
 import SearchComponent from "./SearchComponent.vue";
@@ -173,6 +176,7 @@ watch(objects, () => {
  * calculates score relations between two or three gpus
  * @param gpusInput
  */
+
 function calculateScoreRelations(gpusInput: (Gpu | null)[]) {
   const active = gpusInput.filter((g): g is Gpu => g !== null);
   showScore.value = active.length >= 2;
@@ -197,6 +201,7 @@ function calculateScoreRelations(gpusInput: (Gpu | null)[]) {
   applyRelation("computeEfficiency", "computeEfficiencyScoreRelation");
   applyRelation("gamingEfficiency", "gamingEffiencyScoreRelation");
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -300,6 +305,11 @@ function calculateScoreRelations(gpusInput: (Gpu | null)[]) {
 #table3 > * {
     justify-self: end;
     grid-column: 3;
+}
+
+#emptyTables {
+    margin-top: 100px;
+    text-align: center;
 }
 
 @media (max-width: 1030px) {

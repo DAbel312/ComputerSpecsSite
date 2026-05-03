@@ -3,6 +3,8 @@ package de.computerspecs.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,5 +43,16 @@ public class GpuController {
     @GetMapping("/getByName")
     public GpuDTO getGpuByName(@RequestParam String name) {
         return gpuService.getGpuByName(name);
+    }
+
+    /**
+     * gets all gpus from db by sort function (e.g. sort by gaming score or alphabetically)
+     * @param sort
+     * @return
+     */
+
+    @GetMapping("getAllGpus")
+    public Page<GpuDTO> getAllGpusBySortfunction(Pageable pageable) {
+        return gpuService.getGpuBySortFunction(pageable);
     }
 }
