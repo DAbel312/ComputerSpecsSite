@@ -2,17 +2,18 @@
     <div id="main">
         <h1>GPU-Vergleich</h1>
         <div id="searchComponents">
-            <SearchComponent v-bind:nameList="gpuNames" id="searchComponent1" v-model="gpu1" @select="getGpuByName(gpu1, 0)"></SearchComponent>
+            <SearchComponent :nameList="gpuNames" id="searchComponent1" v-model="gpu1" @select="getGpuByName(gpu1, 0)"></SearchComponent>
             <span class="vs">vs.</span>
-            <SearchComponent v-bind:nameList="gpuNames" id="searchComponent2" v-model="gpu2" @select="getGpuByName(gpu2, 1)"></SearchComponent>
+            <SearchComponent :nameList="gpuNames" id="searchComponent2" v-model="gpu2" @select="getGpuByName(gpu2, 1)"></SearchComponent>
             <span class="vs">vs.</span>
-            <SearchComponent v-bind:nameList="gpuNames" id="searchComponent3" v-model="gpu3" @select="getGpuByName(gpu3, 2)"></SearchComponent>
+            <SearchComponent :nameList="gpuNames" id="searchComponent3" v-model="gpu3" @select="getGpuByName(gpu3, 2)"></SearchComponent>
         </div>
         <div id="emptyTables" v-if="!objects[0] && !objects[1] && !objects[2]">
             <h2>Keine GPUs ausgewählt</h2>
         </div>
-        <div id="scoreComponent" v-if="objects[0]">
-            <ScoreComponent :valueGaming="objects[0]?.gamingScore ?? 0" 
+        <div id="scoreComponent">
+            <ScoreComponent v-if="objects[0]"
+                            :valueGaming="objects[0]?.gamingScore ?? 0" 
                             :valueCompute="objects[0]?.computeScore ?? 0" 
                             :valueComputeEfficiencyScore="objects[0]?.computeEfficiency ?? 0"
                             :valueGamingEfficiencyScore="objects[0]?.gamingEfficiency ?? 0"
@@ -24,7 +25,8 @@
                             :showScore="showScore"
                             class="scoreComponent1">
             </ScoreComponent>
-            <ScoreComponent :valueGaming="objects[1]?.gamingScore ?? 0" 
+            <ScoreComponent v-if="objects[1]"
+                            :valueGaming="objects[1]?.gamingScore ?? 0" 
                             :valueCompute="objects[1]?.computeScore ?? 0" 
                             :valueComputeEfficiencyScore="objects[1]?.computeEfficiency ?? 0"
                             :valueGamingEfficiencyScore="objects[1]?.gamingEfficiency ?? 0"
@@ -36,7 +38,8 @@
                             :showScore="showScore"
                             class="scoreComponent2">
             </ScoreComponent>
-            <ScoreComponent :valueGaming="objects[2]?.gamingScore ?? 0" 
+            <ScoreComponent v-if="objects[2]"
+                            :valueGaming="objects[2]?.gamingScore ?? 0" 
                             :valueCompute="objects[2]?.computeScore ?? 0" 
                             :valueComputeEfficiencyScore="objects[2]?.computeEfficiency ?? 0"
                             :valueGamingEfficiencyScore="objects[2]?.gamingEfficiency ?? 0"
@@ -49,8 +52,9 @@
                             class="scoreComponent3">
             </ScoreComponent>
         </div>
-        <div id="importantSpecs" v-if="objects[1]">
+        <div id="importantSpecs">
             <ImportantSpecsComponent
+                            v-if="objects[0]"
                             class="firstImportant" 
                             firstAssignment="VRAM in GB" :firstValue="objects[0]?.memorySizeGb ?? 0"
                             secondAssignment="Base Clock in MHz" :secondValue="objects[0]?.baseClockMhz ?? 0"
@@ -61,7 +65,9 @@
                             seventhAssignment="TMUs" :seventhValue="objects[0]?.tmu ?? 0"
                             eigthAssignment="SMs" :eigthValue="objects[0]?.sm ?? 0">
             </ImportantSpecsComponent>
-            <ImportantSpecsComponent class="secondImportant" 
+            <ImportantSpecsComponent 
+                            v-if="objects[1]"
+                            class="secondImportant" 
                             firstAssignment="VRAM in GB" :firstValue="objects[1]?.memorySizeGb ?? 0"
                             secondAssignment="Base Clock in MHz" :secondValue="objects[1]?.baseClockMhz ?? 0"
                             thirdAssignment="Boost Clock in MHz" :thirdValue="objects[1]?.boostClockMhz ?? 0"
@@ -71,7 +77,9 @@
                             seventhAssignment="TMUs" :seventhValue="objects[1]?.tmu ?? 0"
                             eigthAssignment="SMs" :eigthValue="objects[1]?.sm ?? 0">
             </ImportantSpecsComponent>
-            <ImportantSpecsComponent class="thirdImportant" 
+            <ImportantSpecsComponent 
+                            v-if="objects[2]"
+                            class="thirdImportant" 
                             firstAssignment="VRAM in GB" :firstValue="objects[2]?.memorySizeGb ?? 0"
                             secondAssignment="Base Clock in MHz" :secondValue="objects[2]?.baseClockMhz ?? 0"
                             thirdAssignment="Boost Clock in MHz" :thirdValue="objects[2]?.boostClockMhz ?? 0"
@@ -82,8 +90,9 @@
                             eigthAssignment="SMs" :eigthValue="objects[2]?.sm ?? 0">
             </ImportantSpecsComponent>
         </div>
-        <div id="importantInfo" v-if="objects[2]">
+        <div id="importantInfo">
             <ImportantInfoComponent 
+                            v-if="objects[0]"
                             class="firstImportant"
                             firstAssignment="Hersteller" :firstValue="objects[0]?.manufacturer ?? 'null'"
                             secondAssignment="GPU-Name" :secondValue="objects[0]?.gpuName ?? 'null'"
@@ -92,6 +101,7 @@
                             fifthAssignment="Fertigung in nm" :fifthValue="objects[0]?.processNm ?? 'null'">
             </ImportantInfoComponent>
             <ImportantInfoComponent 
+                            v-if="objects[1]"
                             class="secondImportant"
                             firstAssignment="Hersteller" :firstValue="objects[1]?.manufacturer ?? 'null'"
                             secondAssignment="GPU-Name" :secondValue="objects[1]?.gpuName ?? 'null'"
@@ -100,6 +110,7 @@
                             fifthAssignment="Fertigung in nm" :fifthValue="objects[1]?.processNm ?? 'null'">>
             </ImportantInfoComponent>
             <ImportantInfoComponent 
+                            v-if="objects[2]"
                             class="thirdImportant"
                             firstAssignment="Hersteller" :firstValue="objects[2]?.manufacturer ?? 'null'"
                             secondAssignment="GPU-Name" :secondValue="objects[2]?.gpuName ?? 'null'"
@@ -126,6 +137,12 @@ import ScoreComponent from "./ScoreComponent.vue";
 import ImportantSpecsComponent from "./ImportantSpecsComponent.vue";
 import ImportantInfoComponent from "./ImportantInfoComponent.vue";
 
+const props = withDefaults(defineProps<{
+  gpuName?: string
+}>(),{
+  gpuName: ""
+})
+
 const gpuNames = ref([]);
 const gpu1 = ref("");
 const gpu2 = ref("");
@@ -136,6 +153,7 @@ const showScore = ref<boolean>();
 onMounted(() => {
     getGpuNameList();
     calculateScoreRelations(objects.value);
+    getGpuByName(props.gpuName, 0);
 });
 
 /**
@@ -155,8 +173,13 @@ async function getGpuNameList() {
  */
 
 async function getGpuByName(name: string, slot: number) {
+
+    if (!name || name === "gpuName") {
+        return;
+    }
+
     const response = await axios.get<Gpu>("http://localhost:5174/api/gpu/getByName", {
-    params: { name }
+        params: { name }
     });
 
     const gpuWithType: Gpu = {
@@ -318,14 +341,78 @@ function calculateScoreRelations(gpusInput: (Gpu | null)[]) {
     }
 
     #searchComponents {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, 1fr);
-    justify-items: center;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, 1fr);
+        justify-items: center;
+        justify-self: center;
     }
 
     #searchComponent3 {
         justify-self: center;
+    }
+
+    #scoreComponent {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        justify-items: center;
+
+        .scoreComponent1 {
+            justify-self: center;
+            margin-top: 40px;
+        }
+
+        .scoreComponent2 {
+            margin-top: 40px;
+        }
+
+        .scoreComponent3 {
+            justify-self: center;
+            margin-top: 40px;
+        }
+    }
+
+    #importantSpecs {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        justify-items: center;
+    }
+
+    #importantInfo {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        justify-items: center;
+    }
+
+    #tables {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+
+        #table1, #table2, #table3 {
+            grid-column: 1;
+            margin-top: 40px;
+        }
+
+        #table1 > * {
+            justify-self: center;
+        }
+
+        #table2 > * {
+            justify-self: center;
+        }
+
+        #table3 > * {
+            justify-self: center;
+        }
+    }
+
+    .firstImportant, .secondImportant, .thirdImportant {
+        justify-self: center !important;
+        margin-top: 40px;
     }
 }
 </style>

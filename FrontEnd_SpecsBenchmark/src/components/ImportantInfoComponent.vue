@@ -71,6 +71,10 @@ const props = withDefaults(defineProps<{
         grid-template-columns: 1fr 1fr;
         grid-row: 1fr;
         justify-items: center;
+
+        div {
+            text-align: center;
+        }
     }
 }
 </style>

@@ -11,7 +11,6 @@ import AllGpus from '../components/AllGpus.vue';
 
 /**
  * all routes in front-end
- * @type {[{path: string, component: {new(): {$host: Element | null, $props: {}, $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends ((...args: any) => infer R) ? ((...args: [R, R, OnCleanup]) => any) : ((...args: [any, any, OnCleanup]) => any), options?: WatchOptions): WatchStopHandle, $: ComponentInternalInstance, $data: {isCreateNewsVisible}, $slots: (UnwrapSlotsType<any>&{}), $attrs: Data, $parent: ComponentPublicInstance | null, $options: any, $forceUpdate: () => void, $el: any, $nextTick: typeof nextTick, $refs: {[p: string]: unknown}, $root: ComponentPublicInstance | null, $emit: (event: string, ...args: any[]) => void, isCreateNewsVisible}}, name: string},{path: string, component: {new(): {$host: Element | null, $props: {}, $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends ((...args: any) => infer R) ? ((...args: [R, R, OnCleanup]) => any) : ((...args: [any, any, OnCleanup]) => any), options?: WatchOptions): WatchStopHandle, $: ComponentInternalInstance, $data: {}, $slots: (UnwrapSlotsType<any>&{}), $attrs: Data, $parent: ComponentPublicInstance | null, $options: any, $forceUpdate: () => void, $el: any, $nextTick: typeof nextTick, $refs: {[p: string]: unknown}, $root: ComponentPublicInstance | null, $emit: (event: string, ...args: any[]) => void}}, name: string},{path: string, component: {new(): {$host: Element | null, $props: {}, $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends ((...args: any) => infer R) ? ((...args: [R, R, OnCleanup]) => any) : ((...args: [any, any, OnCleanup]) => any), options?: WatchOptions): WatchStopHandle, $: ComponentInternalInstance, $data: {}, $slots: (UnwrapSlotsType<any>&{}), $attrs: Data, $parent: ComponentPublicInstance | null, $options: any, $forceUpdate: () => void, $el: any, $nextTick: typeof nextTick, $refs: {[p: string]: unknown}, $root: ComponentPublicInstance | null, $emit: (event: string, ...args: any[]) => void}}, meta: {requiresAuth: boolean}, name: string},{path: string, component: {new(): {$host: Element | null, $props: {}, $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends ((...args: any) => infer R) ? ((...args: [R, R, OnCleanup]) => any) : ((...args: [any, any, OnCleanup]) => any), options?: WatchOptions): WatchStopHandle, $: ComponentInternalInstance, $data: {password, username}, $slots: (UnwrapSlotsType<any>&{}), $attrs: Data, $parent: ComponentPublicInstance | null, $options: any, $forceUpdate: () => void, $el: any, $nextTick: typeof nextTick, $refs: {[p: string]: unknown}, $root: ComponentPublicInstance | null, $emit: (event: string, ...args: any[]) => void, password, username, login}}, name: string}]}
  */
 
 const routes = [
@@ -53,9 +52,10 @@ const routes = [
         component: NotFound
     },
     {
-        path: "/gpu",
+        path: "/gpu/:gpuName",
         name: "gpu",
-        component: Gpu 
+        component: Gpu,
+        props: true
     },
     {
         path: "/allGpus",

@@ -58,7 +58,7 @@
                 </thead>
                 <tbody v-for="gpu in gpus">
                     <td>{{ gpu?.manufacturer }}</td>
-                    <td>{{ gpu?.name }}</td>
+                    <td id="gpuName" @click="pushToGpu(gpu?.name)">{{ gpu?.name }}</td>
                     <td>{{ gpu?.gamingScore }}</td>
                     <td>{{ gpu?.gamingEfficiency }}</td>
                     <td>{{ gpu?.computeScore }}</td>
@@ -85,6 +85,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import type { Gpu } from "../domain/CompareObjects";
+import router from "../router";
 
 const PageNumbers = ref<number>();
 const gpus = ref<(Gpu | null)[]>([]);
@@ -119,6 +120,14 @@ async function getPageNumbers() {
 
     PageNumbers.value = Math.floor((response.data.length) / 50);
 }
+
+/**
+ * forwards to gpu comparism with selected gpu by name
+ */
+
+function pushToGpu(gpuName: string | undefined) {
+    router.push("/gpu/" + gpuName)
+}
 </script>
 
 <style lang="scss">
@@ -128,6 +137,7 @@ async function getPageNumbers() {
     #pages {
         margin-top: 70px;
         text-align: center;
+        overflow-wrap: break-word;
     }
 
     #allGpuTable {
@@ -137,11 +147,14 @@ async function getPageNumbers() {
         background-color: white;
         width: 100%;
         line-height: 150%;
+
         thead {
+
             tr {
                 height: 60px;
                 border-bottom: 1px solid var(--primaryDarkerBackgroundColor1);
             }
+
             th {
                 width: 10%;
             }
@@ -155,8 +168,14 @@ async function getPageNumbers() {
             &:last-of-type {
                 border-bottom: none;
             }
+
             td {
                 text-align: center;
+            }
+            
+            #gpuName:hover {
+                cursor: pointer;
+                font-weight: bold;
             }
         }
     }
