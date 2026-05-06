@@ -61,6 +61,11 @@ const routes = [
         path: "/allGpus",
         name: "allGpus",
         component: AllGpus
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFoundCatchAll',
+        component: NotFound
     }
     
 ]
