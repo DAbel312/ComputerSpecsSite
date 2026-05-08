@@ -8,6 +8,7 @@ import Article from "../components/Article.vue";
 import NotFound from '../components/NotFound.vue';
 import Gpu from '../components/Gpu.vue';
 import AllGpus from '../components/AllGpus.vue';
+import IdleGame from '../components/IdleGame.vue'
 
 /**
  * all routes in front-end
@@ -61,6 +62,11 @@ const routes = [
         path: "/allGpus",
         name: "allGpus",
         component: AllGpus
+    },
+    {
+        path: "/gpuIdleTycoon",
+        name: "gpuIdleTycoon",
+        component: IdleGame
     },
     {
         path: '/:pathMatch(.*)*',

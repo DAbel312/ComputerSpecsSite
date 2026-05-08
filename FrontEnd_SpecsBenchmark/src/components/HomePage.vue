@@ -31,6 +31,11 @@
       </div>
     </div>
   </div>
+  <div id="gameArea">
+    <h2>GPU Idle Tycoon</h2>
+    <span>Hier kannst Du ein GPU Idle Tycoon spielen, bei dem Du GPUs verkaufen kannst, die Nachfrage steigern kannst und in die Produktion investieren kannst. Der Fortschritt wird im Browser gespeichert.</span>
+    <csButton @click="router.push('gpuIdleTycoon')" href="/news" content="GPU Idle Tycoon" width="200px" class="mainAreaButton" id="gameButton"/>
+  </div>
   <div id="newsArea">
     <h2 id="h2NewsArea">Neuigkeiten</h2>
     <div id="newsComponents" v-for="(article, idx) in articles" :key="article.id ?? idx">
@@ -66,13 +71,16 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+main {
+  background-color: var(--white);
+}
 
 #mainArea {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
-  background-color: var(--primaryBackgroundColor1);
+  background-color: var(--white);
 }
 
 .mainAreaHome {
@@ -155,20 +163,24 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto auto;
-  width: 100%;
+  width: 90%;
   height: fit-content;
-  background-color: var(--primaryColor2);
+  background-color: var(--primaryBackgroundColor1);
   box-sizing: border-box;
+  justify-self: center;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin-bottom: 40px;
 
   #h2NewsArea {
     text-align: center;
-    color: var(--primaryBackgroundColor1);
     font-weight: bold;
     font-size: 3rem;
     padding-top: 20px;
     grid-row: 1;
     grid-column: 1;
     margin-bottom: 30px;
+    word-break: break-word;
   }
 
   #moreNewsButton {
@@ -178,6 +190,109 @@ onMounted(async () => {
     height: 40px;
     margin: 50px 50px;
   }
+}
+
+.newsDiv0{
+  border-radius: 20px;
+  background-color: var(--primaryBackgroundColor1);
+  width: 80%;
+  height: fit-content;
+  box-sizing: border-box;
+  margin-left: 3%;
+  padding: 2% 2% 2% 2%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+  h3 {
+    color: var(--textGreen);
+    word-break: break-word;
+    font-size: 1.7rem;
+  }
+
+  div {
+    word-break: break-word;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  p {
+    color: var(--primaryColor2);
+    font-size: 0.8rem;
+  }
+}
+
+.newsDiv1{
+  border-radius: 20px;
+  background-color: var(--white);
+  width: 80%;
+  height: fit-content;
+  box-sizing: border-box;
+  padding: 2% 2% 2% 2%;
+  margin-left: 17%;
+  margin-right: 3%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin-top: 60px;
+
+  h3 {
+    color: var(--textGreen);
+    word-break: break-word;
+    font-size: 1.7rem;
+  }
+
+  div {
+    word-break: break-word;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  p {
+    color: var(--primaryColor2);
+    font-size: 0.8rem;
+  }
+
+}
+
+#gameArea {
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: fit-content;
+  width: 90%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  margin-bottom: 40px;
+  border-radius: 5px;
+  background-color: var(--primaryBackgroundColor1);
+  justify-self: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: scale 0.3s ease-in-out;
+
+  h2 {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 3rem;
+    word-break: break-word;
+  }
+
+  #gameButton {
+    margin-top: 30px;
+    justify-self: center;
+    height: 40px;
+  }
+
+  span {
+    margin: 20px 10px 10px 10px;
+    word-wrap: break-word;
+    line-height: 30px;
+    text-align: center; 
+  }
+}
+
+#gameArea:hover {
+  scale: 1.02;
+  transition: scale 0.3s;
 }
 
 @media (max-width: 1439px) {
@@ -216,70 +331,6 @@ onMounted(async () => {
     scale: 0.95;
     transition: scale 0.3s;
   }
-}
-
-</style>
-
-<style lang="scss">
-.newsDiv0{
-  border-radius: 20px;
-  background-color: var(--primaryBackgroundColor1);
-  width: 80%;
-  height: fit-content;
-  box-sizing: border-box;
-  margin-left: 3%;
-  padding: 2% 2% 2% 2%;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-  h3 {
-    color: var(--textGreen);
-    word-break: break-word;
-    font-size: 1.7rem;
-  }
-
-  div {
-    word-break: break-word;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    line-height: 1.7;
-  }
-
-  p {
-    color: var(--primaryColor2);
-    font-size: 0.8rem;
-  }
-}
-
-.newsDiv1{
-  border-radius: 20px;
-  background-color: var(--primaryBackgroundColor1);
-  width: 80%;
-  height: fit-content;
-  box-sizing: border-box;
-  padding: 2% 2% 2% 2%;
-  margin-left: 17%;
-  margin-right: 3%;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin-top: 60px;
-
-  h3 {
-    color: var(--textGreen);
-    word-break: break-word;
-    font-size: 1.7rem;
-  }
-
-  div {
-    word-break: break-word;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    line-height: 1.7;
-  }
-
-  p {
-    color: var(--primaryColor2);
-    font-size: 0.8rem;
-  }
-
 }
 </style>
 

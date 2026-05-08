@@ -40,16 +40,17 @@ function goToFullArticle (id: number) {
 
 <style lang="scss">
 
-#newsCard{
+#newsCard {
   margin-top: 40px;
   border-radius: 12px;
-  background-color: var(--primaryBackgroundColor1);
+  background-color: var(--primaryLighterBackgroundColor1);
   width: 90%;
   height: fit-content;
   box-sizing: border-box;
   margin-left: 5%;
   padding: 25px 25px 25px 25px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: scale 0.3s ease-in-out;
 
 
   h3 {
@@ -80,6 +81,10 @@ function goToFullArticle (id: number) {
     display: grid;
     justify-content: center;
   }
+}
+
+#newsCard:hover {
+  scale: 1.02;
 }
 
 </style>
