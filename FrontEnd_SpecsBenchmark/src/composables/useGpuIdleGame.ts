@@ -12,12 +12,21 @@ const MIN_PRICE_PER_GPU = 100;
 const MAX_PRICE_PER_GPU = 5000;
 const PRICE_STEP = 50;
 
+const PRESTIGE_REQUIREMENT = 1_000_000_000;
+const PRESTIGE_MONEY_DIVISOR = 1_000_000_000;
+const PRESTIGE_BONUS_PER_POINT = 0.05;
+
 const BASE_GPU_PER_SECOND = 0.2;
 
-const TICK_RATE_SECONDS = 1;
+const TICK_RATE_SECONDS = 0.1;
 const TICK_RATE_MS = TICK_RATE_SECONDS * 1000;
 
-function createInitialState(): GameState {
+function createInitialState(
+  prestigePoints = 0,
+  totalPrestigePoints = 0,
+  prestigeCount = 0,
+  lifetimeMoney = 0
+): GameState {
   return {
     money: 0,
     inventory: 0,
@@ -28,6 +37,11 @@ function createInitialState(): GameState {
     pricePerGpu: BASE_PRICE_PER_GPU,
     lastSavedAt: Date.now(),
     purchasedUpgradeIds: [],
+
+    lifetimeMoney,
+    prestigePoints,
+    totalPrestigePoints,
+    prestigeCount,
   };
 }
 
@@ -54,6 +68,18 @@ export function useGpuIdleGame() {
     ONE_TIME_UPGRADES.filter((upgrade) =>
       state.value.purchasedUpgradeIds.includes(upgrade.id)
     )
+  );
+
+  const potentialPrestigePoints = computed(() =>
+    getPotentialPrestigePoints(state.value)
+  );
+
+  const prestigeMultiplier = computed(() =>
+    getPrestigeMultiplier(state.value)
+  );
+
+  const isPrestigeAvailable = computed(() =>
+    canPrestige(state.value)
   );
 
   function gameTick() {
@@ -145,6 +171,35 @@ export function useGpuIdleGame() {
     saveGame(state.value);
   }
 
+  function prestigeReset() {
+    const gainedPrestigePoints = getPotentialPrestigePoints(state.value);
+
+    if (gainedPrestigePoints <= 0) {
+      return;
+    }
+
+    const oldLifetimeMoney = state.value.lifetimeMoney;
+
+    const newPrestigePoints =
+      state.value.prestigePoints + gainedPrestigePoints;
+
+    const newTotalPrestigePoints =
+      state.value.totalPrestigePoints + gainedPrestigePoints;
+
+    const newPrestigeCount = state.value.prestigeCount + 1;
+
+    state.value = recalculateState(
+      createInitialState(
+        newPrestigePoints,
+        newTotalPrestigePoints,
+        newPrestigeCount,
+        oldLifetimeMoney
+      )
+    );
+
+    saveGame(state.value);
+  }
+
   onMounted(() => {
     intervalId = window.setInterval(gameTick, TICK_RATE_MS);
   });
@@ -155,7 +210,7 @@ export function useGpuIdleGame() {
     }
   });
 
-return {
+  return {
     state,
     marketingCost,
     factoryCost,
@@ -169,6 +224,11 @@ return {
     availableOneTimeUpgrades,
     purchasedOneTimeUpgrades,
     buyOneTimeUpgrade,
+
+    potentialPrestigePoints,
+    prestigeMultiplier,
+    isPrestigeAvailable,
+    prestigeReset,
   };
 }
 
@@ -185,6 +245,7 @@ function tick(state: GameState, seconds: number): GameState {
     ...state,
     inventory: newInventory,
     money: state.money + earned,
+    lifetimeMoney: state.lifetimeMoney + earned,
     lastSavedAt: Date.now(),
   };
 }
@@ -305,20 +366,44 @@ function calculateGpuPerSecond(
   return BASE_GPU_PER_SECOND * factoryLevel * productionMultiplier;
 }
 
+function getPrestigeMultiplier(state: GameState): number {
+  return 1 + state.prestigePoints * PRESTIGE_BONUS_PER_POINT;
+}
+
+function getPotentialPrestigePoints(state: GameState): number {
+  if (state.lifetimeMoney < PRESTIGE_REQUIREMENT) {
+    return 0;
+  }
+
+  const totalPointsFromLifetimeMoney = Math.floor(
+    state.lifetimeMoney / PRESTIGE_MONEY_DIVISOR
+  );
+
+  return Math.max(
+    0,
+    totalPointsFromLifetimeMoney - state.totalPrestigePoints
+  );
+}
+
+function canPrestige(state: GameState): boolean {
+  return getPotentialPrestigePoints(state) > 0;
+}
+
 function recalculateState(state: GameState): GameState {
   const productionMultiplier = getProductionMultiplier(state);
   const demandMultiplier = getDemandMultiplier(state);
+  const prestigeMultiplier = getPrestigeMultiplier(state);
 
   return {
     ...state,
     gpuPerSecond: calculateGpuPerSecond(
       state.factoryLevel,
-      productionMultiplier
+      productionMultiplier * prestigeMultiplier
     ),
     demand: calculateDemand(
       state.pricePerGpu,
       state.marketingLevel,
-      demandMultiplier
+      demandMultiplier * prestigeMultiplier
     ),
   };
 }

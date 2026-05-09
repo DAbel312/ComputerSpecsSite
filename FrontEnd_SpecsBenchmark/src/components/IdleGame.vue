@@ -21,17 +21,35 @@
             <p>Nachfrage</p>
             <p>{{ state.demand.toFixed(2) }} GPUs/s</p>
             <p>Verkaufspreis</p>
-            <p>{{ formatNumber(state.pricePerGpu) }} €/GPU</p>
+            <p id="pricePerGpu">{{ formatNumber(state.pricePerGpu) }} €/GPU</p>
         </div>
 
         <div id="upgradeDiv">
-            <p>{{ availableOneTimeUpgrades }}</p>
+            <div id="availableUpgradeDiv" v-for="upgrade in availableOneTimeUpgrades" @click="buyOneTimeUpgrade(upgrade.id)" :class="{ disabled: upgrade.cost > state.money }">
+                <p>{{ upgrade.name }}</p>
+                <p>{{ upgrade.description }}</p>
+                <p>{{ upgrade.cost }} €</p>
+            </div>
+        </div>
+
+        <div id="resetDiv">
+            <h2>Spielstand zurücksetzen</h2>
+            <p>Du kannst Dein Spiel hier zurücksetzen, um Prestigepoints zu erhalten, damit Produktion und Verkauf steigen.</p>
+            <p>Aktuelle Prestigepoints: {{ state.prestigeCount }}</p>
+            <p id="prestigePoints1">Mögliche Prestigepoints:</p>
+            <p id="prestigePoints2">{{ potentialPrestigePoints }}</p>
+            <button @click="prestigeReset" id="resetButton" :disabled="potentialPrestigePoints <= 0">Prestige reset</button>
+        </div>
+
+        <div id="moreNews">
+            <RandomNews></RandomNews>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useGpuIdleGame } from '../composables/useGpuIdleGame';
+import RandomNews from "./RandomNews.vue";
 
 const {
   state,
@@ -44,7 +62,10 @@ const {
   decreasePrice,
   produceGpu,
   availableOneTimeUpgrades,
-  purchasedOneTimeUpgrades
+  purchasedOneTimeUpgrades,
+  buyOneTimeUpgrade,
+  potentialPrestigePoints,
+  prestigeReset
 } = useGpuIdleGame();
 
 function formatNumber(value: number): string {
@@ -54,7 +75,7 @@ function formatNumber(value: number): string {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 h1 {
     text-align: center;
     margin-top: 20px;
@@ -63,8 +84,9 @@ h1 {
 #main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 1fr;
     justify-items: center;
+    padding: 70px 0px 0px 0px;
 }
 
 #statsDiv {
@@ -91,6 +113,40 @@ h1 {
         box-sizing: border-box;
         padding-top: 6px;
     }
+
+    #pricePerGpu {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}
+
+button {
+    padding: 10px 10px 10px 10px !important;
+    margin-top: 20px;
+    padding: 15px 20px;
+    border: none;
+    outline: none;
+    background-color: #151515;
+    color: #eee;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+    width: 85%;
+    justify-self: center;
+}
+
+button:disabled {
+    transition: none;
+    background-color: var(--primaryDarkerBackgroundColor1);
+}
+
+button:disabled:hover {
+    cursor: default;
+    transform: none;
+}
+
+button:hover {
+    transform: translateY(-3px);
 }
 
 #buttonDiv {
@@ -104,32 +160,6 @@ h1 {
     width: 75%;
     box-sizing: border-box;
     padding: 10px 10px 20px 10px;
-
-
-    button {
-        padding: 10px 10px 10px 10px !important;
-        margin-top: 20px;
-        padding: 15px 20px;
-        border: none;
-        outline: none;
-        background-color: #151515;
-        color: #eee;
-        border-radius: 7px;
-        cursor: pointer;
-        transition: all 0.25s ease-out;
-        width: 85%;
-        justify-self: center;
-    }
-
-    button:disabled {
-        transition: none;
-        background-color: var(--primaryDarkerBackgroundColor1);
-    }
-
-    button:disabled:hover {
-        cursor: default;
-        transform: none;
-    }
 
     #b1 {
         grid-column: 1 / 3;
@@ -162,10 +192,6 @@ h1 {
         grid-column: 1 / 3;
         grid-row: 5;
     }
-
-button:hover {
-        transform: translateY(-3px);
-    }
 }
 
 #upgradeDiv {
@@ -176,19 +202,105 @@ button:hover {
     width: 75%;
     box-sizing: border-box;
     padding: 10px 10px 10px 10px;
+    overflow-y: auto;
+
+    #availableUpgradeDiv {
+        background-color: #151515;
+        border-radius: 5px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 90%;
+        min-height: 70px;
+        height: fit-content;
+        box-sizing: border-box;
+        padding-top: 10px;
+        justify-self: anchor-center;
+        margin-top: 10px;
+        color: #eee;
+
+        p {
+            text-align: center;
+        }
+    }
+
+    #availableUpgradeDiv:hover {
+            scale: 1.03;
+            cursor: pointer;
+        }
+
+    .disabled {
+        background-color: var(--primaryDarkerBackgroundColor1) !important;
+    }
+
+    .disabled:hover {
+        cursor: default !important;
+        scale: none !important;
+    }
+}
+
+#resetDiv {
+    background-color: var(--primaryBackgroundColor1);
+    min-height: 380px;
+    height: fit-content;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    grid-column: 1 / 4;
+    margin-top: 40px;
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    width: 92%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, 1fr);
+
+    h2 {
+        text-align: center;
+        word-wrap: break-word;
+        margin-top: 20px;
+    }
+
+    p {
+        text-align: center;
+        word-wrap: break-word;
+        margin-top: 40px;
+    }
+
+    #prestigePoints1, #prestigePoints2 {
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+
+    #resetButton {
+        margin-top: 0;
+        justify-self: anchor-center;
+        margin-top: 20px;
+    }
+}
+
+#moreNews {
+    grid-column: 1 / 4;
+    width: 100%;
+    background-color: #ffffff;
+    margin-top: 80px;
 }
 
 @media (max-width: 1000px) {
+    #buttonDiv, #statsDiv, #upgradeDiv {
+        grid-column: 1 / 4;
+    }
+
+    #resetDiv {
+        width: 75%;
+    }
+
     #main {
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
         row-gap: 40px;
     }
 }
 
 @media (max-width: 400px) {
-    #statsDiv, #buttonDiv, #upgradeDiv {
-        width: 110%;
+    #statsDiv, #buttonDiv, #upgradeDiv, #resetDiv {
+        width: 90%;
     }
 }
 </style>

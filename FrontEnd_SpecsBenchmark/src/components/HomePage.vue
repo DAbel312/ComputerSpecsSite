@@ -5,7 +5,7 @@
         <img src="../assets/Bilder/LogoGrafic.webp" alt="GPU">
       </div>
       <div id="gpuMain2">
-        <span>Hier kannst Du die Spezifikationen von GPUs verleichen, wie z. B. die Shader-Einheiten, Tensor Cores oder ROPs. Darunter fallen sowohl GPUs von Intel, AMD sowie Nvidia.</span>
+        <span>Hier kannst Du die Spezifikationen von GPUs vergleichen, wie z. B. die Shader-Einheiten, Tensor Cores oder ROPs. Darunter fallen sowohl GPUs von Intel, AMD sowie Nvidia.</span>
         <csButton @click="router.push('allGpus')" content="Alle GPUs" class="mainAreaButton"/>
         <csButton @click="router.push('gpu/gpuName')" content="GPU-Vergleich" class="mainAreaButton"/>
       </div>
@@ -71,13 +71,32 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@mixin card-shadow {
+  box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+}
+
+@mixin rounded-top($radius: 12px) {
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin rounded-bottom($radius: 12px) {
+  border-bottom-left-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin centered-text {
+  word-wrap: break-word;
+  line-height: 30px;
+  text-align: center;
+}
+
 main {
   background-color: var(--white);
 }
 
 #mainArea {
   display: grid;
-  grid-template-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
   background-color: var(--white);
@@ -86,67 +105,70 @@ main {
 .mainAreaHome {
   width: 350px;
   height: 470px;
+  margin: 20% 0;
   border-radius: 13px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin-top: 20%;
-  margin-bottom: 20%;
   box-sizing: border-box;
-  scale: 1.3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: scale 0.3s ease-in-out;
+  transform: scale(1.3);
+  transition: transform 0.3s ease-in-out;
 
+  @include card-shadow;
 
-  #gpuMain1, #cpuMain1, #ssdMain1 {
+  &:hover {
+    transform: scale(1.35);
+  }
+
+  #gpuMain1,
+  #cpuMain1,
+  #ssdMain1 {
     width: 100%;
     height: 45%;
     background-color: black;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+
+    @include rounded-top;
 
     img {
       width: 99.8%;
       height: 155%;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
       padding-left: 0.1%;
+
+      @include rounded-top;
     }
   }
 
-  #gpuMain2, #cpuMain2, #ssdMain2 {
-    box-sizing: border-box;
+  #gpuMain2,
+  #cpuMain2,
+  #ssdMain2 {
     width: 100%;
     height: 55%;
+    box-sizing: border-box;
     background-color: var(--primaryBackgroundColor1);
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
     justify-content: flex-end;
     align-items: center;
+
+    @include rounded-bottom;
+  }
+
+  span {
+    display: block;
+    height: 45%;
+    margin: 10px;
+
+    @include centered-text;
   }
 
   .mainAreaButton {
-    font-weight: bold;
-    text-decoration-line: none;
     display: block;
     width: 60%;
     height: 40px;
-    text-align: center;
+    margin: 5% auto 0;
     padding-top: 3%;
     box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5%;
-  }
-
-
-  span {
-    margin: 10px 10px 10px 10px;
-    display: block;
-    height: 45%;
-    word-wrap: break-word;
-    line-height: 30px;
+    font-weight: bold;
     text-align: center;
+    text-decoration-line: none;
   }
 }
 
@@ -154,145 +176,114 @@ main {
   margin-top: 20px;
 }
 
-#gpuMain:hover, #cpuMain:hover, #ssdMain:hover {
-  scale: 1.35;
-  transition: scale 0.3s;
+#gameArea,
+#newsArea {
+  width: 90%;
+  height: fit-content;
+  box-sizing: border-box;
+  justify-self: center;
+  border-radius: 5px;
+  background-color: var(--primaryBackgroundColor1);
+  margin-bottom: 40px;
+
+  @include card-shadow;
+}
+
+#gameArea {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding-bottom: 20px;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  h2 {
+    padding-top: 20px;
+    font-size: 3rem;
+    text-align: center;
+    word-break: break-word;
+  }
+
+  span {
+    margin: 20px 10px 10px;
+
+    @include centered-text;
+  }
+
+  #gameButton {
+    height: 40px;
+    margin-top: 30px;
+    justify-self: center;
+  }
 }
 
 #newsArea {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto auto;
-  width: 90%;
-  height: fit-content;
-  background-color: var(--primaryBackgroundColor1);
-  box-sizing: border-box;
-  justify-self: center;
-  border-radius: 5px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin-bottom: 40px;
 
   #h2NewsArea {
-    text-align: center;
-    font-weight: bold;
-    font-size: 3rem;
-    padding-top: 20px;
     grid-row: 1;
     grid-column: 1;
     margin-bottom: 30px;
+    padding-top: 20px;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
     word-break: break-word;
   }
 
   #moreNewsButton {
     grid-row: 5;
     grid-column: 1;
-    justify-self: center;
     height: 40px;
-    margin: 50px 50px;
+    margin: 50px;
+    justify-self: center;
   }
 }
 
-.newsDiv0{
-  border-radius: 20px;
-  background-color: var(--primaryBackgroundColor1);
+.newsDiv0,
+.newsDiv1 {
   width: 80%;
   height: fit-content;
   box-sizing: border-box;
+  padding: 2%;
+  border-radius: 20px;
+
+  @include card-shadow;
+
+  h3 {
+    color: var(--textGreen);
+    font-size: 1.7rem;
+    word-break: break-word;
+  }
+
+  div {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    line-height: 1.7;
+    word-break: break-word;
+  }
+
+  p {
+    color: var(--primaryColor2);
+    font-size: 0.8rem;
+  }
+}
+
+.newsDiv0 {
   margin-left: 3%;
-  padding: 2% 2% 2% 2%;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-  h3 {
-    color: var(--textGreen);
-    word-break: break-word;
-    font-size: 1.7rem;
-  }
-
-  div {
-    word-break: break-word;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    line-height: 1.7;
-  }
-
-  p {
-    color: var(--primaryColor2);
-    font-size: 0.8rem;
-  }
-}
-
-.newsDiv1{
-  border-radius: 20px;
-  background-color: var(--white);
-  width: 80%;
-  height: fit-content;
-  box-sizing: border-box;
-  padding: 2% 2% 2% 2%;
-  margin-left: 17%;
-  margin-right: 3%;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin-top: 60px;
-
-  h3 {
-    color: var(--textGreen);
-    word-break: break-word;
-    font-size: 1.7rem;
-  }
-
-  div {
-    word-break: break-word;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    line-height: 1.7;
-  }
-
-  p {
-    color: var(--primaryColor2);
-    font-size: 0.8rem;
-  }
-
-}
-
-#gameArea {
-
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  height: fit-content;
-  width: 90%;
-  box-sizing: border-box;
-  padding-bottom: 20px;
-  margin-bottom: 40px;
-  border-radius: 5px;
   background-color: var(--primaryBackgroundColor1);
-  justify-self: center;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  transition: scale 0.3s ease-in-out;
-
-  h2 {
-    text-align: center;
-    padding-top: 20px;
-    font-size: 3rem;
-    word-break: break-word;
-  }
-
-  #gameButton {
-    margin-top: 30px;
-    justify-self: center;
-    height: 40px;
-  }
-
-  span {
-    margin: 20px 10px 10px 10px;
-    word-wrap: break-word;
-    line-height: 30px;
-    text-align: center; 
-  }
 }
 
-#gameArea:hover {
-  scale: 1.02;
-  transition: scale 0.3s;
+.newsDiv1 {
+  margin-top: 60px;
+  margin-right: 3%;
+  margin-left: 17%;
+  background-color: var(--white);
 }
 
 @media (max-width: 1439px) {
@@ -302,69 +293,31 @@ main {
   }
 
   .mainAreaHome {
-    scale: 1.6;
-  }
+    transform: scale(1.6);
 
-  #gpuMain:hover, #cpuMain:hover, #ssdMain:hover {
-    scale: 1.65;
-    transition: scale 0.3s;
+    &:hover {
+      transform: scale(1.65);
+    }
   }
 }
 
 @media (max-width: 910px) {
   .mainAreaHome {
-    scale: 1.3;
-  }
+    transform: scale(1.3);
 
-  #gpuMain:hover, #cpuMain:hover, #ssdMain:hover {
-    scale: 1.35;
-    transition: scale 0.3s;
+    &:hover {
+      transform: scale(1.35);
+    }
   }
 }
 
 @media (max-width: 500px) {
   .mainAreaHome {
-    scale: 0.9;
-  }
+    transform: scale(0.9);
 
-  #gpuMain:hover, #cpuMain:hover, #ssdMain:hover {
-    scale: 0.95;
-    transition: scale 0.3s;
+    &:hover {
+      transform: scale(0.95);
+    }
   }
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

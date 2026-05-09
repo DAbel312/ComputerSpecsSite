@@ -8,7 +8,7 @@
         </a>
         <ul>
           <li>
-            <button class="button" @click="router.push('gpu')">
+            <button class="button" @click="router.push('gpu/gpuName')">
               GPU
             </button>
           </li>
