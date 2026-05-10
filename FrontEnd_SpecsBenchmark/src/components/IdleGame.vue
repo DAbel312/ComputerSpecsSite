@@ -35,7 +35,7 @@
         <div id="resetDiv">
             <h2>Spielstand zurücksetzen</h2>
             <p>Du kannst Dein Spiel hier zurücksetzen, um Prestigepoints zu erhalten, damit Produktion und Verkauf steigen.</p>
-            <p>Aktuelle Prestigepoints: {{ state.prestigeCount }}</p>
+            <p>Anzahl der Prestigepoints: {{ state.prestigePoints }}</p>
             <p id="prestigePoints1">Mögliche Prestigepoints:</p>
             <p id="prestigePoints2">{{ potentialPrestigePoints }}</p>
             <button @click="prestigeReset" id="resetButton" :disabled="potentialPrestigePoints <= 0">Prestige reset</button>

@@ -11,7 +11,7 @@
         <div id="emptyTables" v-if="!objects[0] && !objects[1] && !objects[2]">
             <h2>Keine GPUs ausgewählt</h2>
         </div>
-        <div id="scoreComponent">
+        <div id="scoreComponent" :class="{ oneRow: objects.filter(obj => obj !== null).length === 1 , twoRows: objects.filter(obj => obj !== null).length === 2, threeRows: objects.filter(obj => obj !== null).length === 3 }">
             <ScoreComponent v-if="objects[0]"
                             :valueGaming="objects[0]?.gamingScore ?? 0" 
                             :valueCompute="objects[0]?.computeScore ?? 0" 
@@ -52,7 +52,7 @@
                             class="scoreComponent3">
             </ScoreComponent>
         </div>
-        <div id="importantSpecs">
+        <div id="importantSpecs" :class="{ oneRow: objects.filter(obj => obj !== null).length === 1 , twoRows: objects.filter(obj => obj !== null).length === 2, threeRows: objects.filter(obj => obj !== null).length === 3 }">
             <ImportantSpecsComponent
                             v-if="objects[0]"
                             class="firstImportant" 
@@ -90,7 +90,7 @@
                             eigthAssignment="SMs" :eigthValue="objects[2]?.sm ?? 0">
             </ImportantSpecsComponent>
         </div>
-        <div id="importantInfo">
+        <div id="importantInfo" :class="{ oneRow: objects.filter(obj => obj !== null).length === 1 , twoRows: objects.filter(obj => obj !== null).length === 2, threeRows: objects.filter(obj => obj !== null).length === 3 }">
             <ImportantInfoComponent 
                             v-if="objects[0]"
                             class="firstImportant"
@@ -119,7 +119,7 @@
                             fifthAssignment="Fertigung in nm" :fifthValue="objects[2]?.processNm ?? 'null'">>
             </ImportantInfoComponent>
         </div>
-        <div id="tables">
+        <div id="tables" :class="{ oneRow: objects.filter(obj => obj !== null).length === 1 , twoRows: objects.filter(obj => obj !== null).length === 2, threeRows: objects.filter(obj => obj !== null).length === 3 }">
             <SpecsComponent v-if="objects[0]" :compareObject="objects[0]" id="table1"/>
             <SpecsComponent v-if="objects[1]" :compareObject="objects[1]" id="table2"/>
             <SpecsComponent v-if="objects[2]" :compareObject="objects[2]" id="table3"/>
@@ -355,7 +355,6 @@ function calculateScoreRelations(gpusInput: (Gpu | null)[]) {
     #scoreComponent {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
         justify-items: center;
 
         .scoreComponent1 {
@@ -373,24 +372,33 @@ function calculateScoreRelations(gpusInput: (Gpu | null)[]) {
         }
     }
 
+    .oneRow {
+        grid-template-rows: 1fr;
+    }
+
+    .twoRows {
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .threeRows {
+        grid-template-rows: repeat(3, 1fr);
+    }
+
     #importantSpecs {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
         justify-items: center;
     }
 
     #importantInfo {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
         justify-items: center;
     }
 
     #tables {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
 
         #table1, #table2, #table3 {
             grid-column: 1;
